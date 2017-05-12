@@ -1,3 +1,4 @@
+require 'phpipam'
 
 Phpipam.configure do |config|
   config.username = 'amin12'
