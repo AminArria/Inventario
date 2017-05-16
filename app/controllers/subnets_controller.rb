@@ -42,7 +42,7 @@ class SubnetsController < ApplicationController
   def destroy
     @subnet.destroy
 
-    redirect_to subnets_url, notice: 'Subnet was successfully destroyed.'
+    redirect_to section_subnets_path(@subnet.section), notice: 'Subnet was successfully destroyed.'
   end
 
   private

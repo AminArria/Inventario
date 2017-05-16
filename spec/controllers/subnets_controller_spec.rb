@@ -4,8 +4,8 @@ RSpec.describe SubnetsController, type: :controller do
 
   describe "GET #index" do
     it "returns a success response" do
-      subnet = create(:subnet)
-      get :index
+      section = create(:section)
+      get :index, params: {section_id: section.id}
       expect(response).to be_success
     end
   end
@@ -20,7 +20,8 @@ RSpec.describe SubnetsController, type: :controller do
 
   describe "GET #new" do
     it "returns a success response" do
-      get :new
+      section = create(:section)
+      get :new, params: {section_id: section.id}
       expect(response).to be_success
     end
   end
@@ -36,20 +37,23 @@ RSpec.describe SubnetsController, type: :controller do
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Subnet" do
+        subnet = build(:subnet)
         expect {
-          post :create, params: {subnet: build(:subnet).attributes}
+          post :create, params: {section_id: subnet.section_id, subnet: subnet.attributes}
         }.to change(Subnet, :count).by(1)
       end
 
       it "redirects to the created subnet" do
-        post :create, params: {subnet: build(:subnet).attributes}
+        subnet = build(:subnet)
+        post :create, params: {section_id: subnet.section_id, subnet: subnet.attributes}
         expect(response).to redirect_to(Subnet.last)
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {subnet: build(:subnet, api_id: nil).attributes}
+        subnet = build(:subnet, api_id: nil)
+        post :create, params: {section_id: subnet.section_id, subnet: subnet.attributes}
         expect(response).to be_success
       end
     end
@@ -97,7 +101,7 @@ RSpec.describe SubnetsController, type: :controller do
     it "redirects to the subnets list" do
       subnet = create(:subnet)
       delete :destroy, params: {id: subnet.to_param}
-      expect(response).to redirect_to(subnets_url)
+      expect(response).to redirect_to(section_subnets_path(subnet.section))
     end
   end
 
