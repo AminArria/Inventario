@@ -8,10 +8,9 @@ namespace :setup do
   desc "Fills database with initial information for sections from PHPIpam"
   task section: :environment do
     Phpipam.authenticate
-    sections = Phpipam::Section.get_all
 
-    sections.each do |section|
-      Section.create!(api_id: section.id, name: section.name, description: section.description)
+    Phpipam::Section.get_all.each do |sec|
+      Section.create(api_id: sec.id, name: sec.name, description: sec.description)
     end
   end
 
