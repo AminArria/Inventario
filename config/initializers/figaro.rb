@@ -1,0 +1,1 @@
+Figaro.require_keys("phpipam_base_url", "phpipam_username", "phpipam_password")
