@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170512153459) do
+ActiveRecord::Schema.define(version: 20170516132503) do
 
   create_table "sections", force: :cascade do |t|
     t.integer "api_id"
@@ -18,6 +18,17 @@ ActiveRecord::Schema.define(version: 20170512153459) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "subnets", force: :cascade do |t|
+    t.integer "api_id"
+    t.string "base"
+    t.integer "mask"
+    t.integer "section_id"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["section_id"], name: "index_subnets_on_section_id"
   end
 
 end

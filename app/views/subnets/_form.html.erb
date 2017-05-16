@@ -1,0 +1,42 @@
+<%= form_with(model: subnet, local: true) do |form| %>
+  <% if subnet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(subnet.errors.count, "error") %> prohibited this subnet from being saved:</h2>
+
+      <ul>
+      <% subnet.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :api_id %>
+    <%= form.number_field :api_id, id: :subnet_api_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :base %>
+    <%= form.text_field :base, id: :subnet_base %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mask %>
+    <%= form.number_field :mask, id: :subnet_mask %>
+  </div>
+
+  <div class="field">
+    <%= form.label :section %>
+    <%= form.text_field :section, id: :subnet_section %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, id: :subnet_description %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
