@@ -1,8 +1,7 @@
 FactoryGirl.define do
   factory :address do
-    api_id 1
-    ip "MyString"
-    subnet nil
-    active false
+    api_id { Faker::Number.between(1, 10) }
+    ip { Faker::Internet.ip_v4_address }
+    subnet
   end
 end
