@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Api:</strong>
+  <%= @address.api_id %>
+</p>
+
+<p>
+  <strong>Ip:</strong>
+  <%= @address.ip %>
+</p>
+
+<p>
+  <strong>Subnet:</strong>
+  <%= @address.subnet %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @address.active %>
+</p>
+
+<%= link_to 'Edit', edit_address_path(@address) %> |
+<%= link_to 'Back', addresses_path %>

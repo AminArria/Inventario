@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516132503) do
+ActiveRecord::Schema.define(version: 20170517134108) do
+
+  create_table "addresses", force: :cascade do |t|
+    t.integer "api_id"
+    t.string "ip"
+    t.integer "subnet_id"
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subnet_id"], name: "index_addresses_on_subnet_id"
+  end
 
   create_table "sections", force: :cascade do |t|
     t.integer "api_id"
