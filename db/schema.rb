@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20170517134108) do
     t.integer "api_id"
     t.string "ip"
     t.integer "subnet_id"
-    t.boolean "active"
+    t.boolean "active", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subnet_id"], name: "index_addresses_on_subnet_id"
