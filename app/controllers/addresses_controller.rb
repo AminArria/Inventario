@@ -23,7 +23,6 @@ class AddressesController < ApplicationController
   # POST /subnet/:subnet_id/addresses
   def create
     @address = Address.new(address_params)
-    @address.subnet = @subnet
 
     if @address.save
       redirect_to @address, notice: 'Address was successfully created.'

@@ -37,23 +37,23 @@ RSpec.describe AddressesController, type: :controller do
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Address" do
-        subnet = create(:subnet)
+        address = build(:address)
         expect {
-          post :create, params: {subnet_id: subnet.id, address: attributes_for(:address)}
+          post :create, params: {subnet_id: address.subnet_id, address: address.attributes}
         }.to change(Address, :count).by(1)
       end
 
       it "redirects to the created address" do
-        subnet = create(:subnet)
-        post :create, params: {subnet_id: subnet.id, address: attributes_for(:address)}
+        address = build(:address)
+        post :create, params: {subnet_id: address.subnet_id, address: address.attributes}
         expect(response).to redirect_to(Address.last)
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
-        subnet = create(:subnet)
-        post :create, params: {subnet_id: subnet.id, address: attributes_for(:address, api_id: nil)}
+        address = build(:address,api_id: nil)
+        post :create, params: {subnet_id: address.subnet_id, address: address.attributes}
         expect(response).to be_success
       end
     end

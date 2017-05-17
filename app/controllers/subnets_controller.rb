@@ -1,16 +1,17 @@
 class SubnetsController < ApplicationController
   before_action :set_subnet, only: [:show, :edit, :update, :destroy]
+  before_action :set_section, only: [:index, :new, :create]
 
-  # GET /subnets
+  # GET /sections/:section_id/subnets
   def index
-    @subnets = Subnet.all
+    @subnets = @section.subnets
   end
 
   # GET /subnets/1
   def show
   end
 
-  # GET /subnets/new
+  # GET /sections/:section_id/subnets/new
   def new
     @subnet = Subnet.new
   end
@@ -19,9 +20,10 @@ class SubnetsController < ApplicationController
   def edit
   end
 
-  # POST /subnets
+  # POST /sections/:section_id/subnets
   def create
     @subnet = Subnet.new(subnet_params)
+
     if @subnet.save
       redirect_to @subnet, notice: 'Subnet was successfully created.'
     else
@@ -49,6 +51,10 @@ class SubnetsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_subnet
       @subnet = Subnet.find(params[:id])
+    end
+
+    def set_section
+      @section = Section.find(params[:section_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
