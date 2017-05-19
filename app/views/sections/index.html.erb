@@ -1,28 +1,33 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Sections</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Api</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @sections.each do |section| %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Secciones</h3>
+  </div>
+  <div class="panel-body">
+    Panel content
+  </div>
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= section.api_id %></td>
-        <td><%= section.name %></td>
-        <td><%= section.description %></td>
-        <td><%= link_to 'Show', section %></td>
-        <td><%= link_to 'Edit', edit_section_path(section) %></td>
+        <th>API ID</th>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+        <th >Acciones</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @sections.each do |section| %>
+        <tr>
+          <td><%= section.api_id %></td>
+          <td><%= section.name %></td>
+          <td><%= section.description %></td>
+          <td>
+            <%= link_to 'Detalles', section %>
+            <%= link_to 'Editar', edit_section_path(section) %>
+            <%= link_to 'Subredes', section_subnets_path(section) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

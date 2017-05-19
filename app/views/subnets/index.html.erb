@@ -1,16 +1,14 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Subnets</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Api</th>
+      <th>API ID</th>
       <th>Base</th>
-      <th>Mask</th>
-      <th>Section</th>
-      <th>Description</th>
-      <th colspan="3"></th>
+      <th>Mascara</th>
+      <th>Sección</th>
+      <th>Descripción</th>
+      <th>Acciones</th>
     </tr>
   </thead>
 
@@ -20,16 +18,17 @@
         <td><%= subnet.api_id %></td>
         <td><%= subnet.base %></td>
         <td><%= subnet.mask %></td>
-        <td><%= subnet.section %></td>
+        <td><%= link_to subnet.section.name, section_path(subnet.section) %></td>
         <td><%= subnet.description %></td>
-        <td><%= link_to 'Show', subnet %></td>
-        <td><%= link_to 'Edit', edit_subnet_path(subnet) %></td>
-        <td><%= link_to 'Destroy', subnet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to 'Show', subnet %>
+          <%= link_to 'Edit', edit_subnet_path(subnet) %>
+          <%= link_to 'Destroy', subnet, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Direcciones IP', subnet_addresses_path(subnet) %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Subnet', new_subnet_path %>
