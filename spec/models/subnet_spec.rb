@@ -49,17 +49,17 @@ RSpec.describe Subnet, type: :model do
 
   it 'gives the number of free hosts' do
     subnet = create(:subnet_hosts)
-    expect(subnet.free_hosts).to eq 1
+    expect(subnet.free_hosts).to eq (subnet.max_hosts - subnet.used_hosts)
   end
 
   it 'gives the percentage of used hosts' do
     subnet = create(:subnet_hosts)
-    expect(subnet.used_percentage).to eq (subnet.max_hosts / subnet.used_hosts * 100)
+    expect(subnet.used_percentage).to eq (subnet.used_hosts / subnet.max_hosts * 100)
   end
 
   it 'gives the percentage of free hosts' do
     subnet = create(:subnet_hosts)
-    expect(subnet.used_percentage).to eq (subnet.max_hosts / subnet.free_hosts * 100)
+    expect(subnet.used_percentage).to eq (subnet.free_hosts / subnet.max_hosts * 100)
   end
 
 end
