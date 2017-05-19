@@ -6,6 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'figaro'
+gem 'bootstrap-sass', '~> 3.3.6'
 
 # PhPIpam API wrapper
 gem 'ruby-phpipam', git: 'git://github.com/AminArria/ruby-phpipam'
