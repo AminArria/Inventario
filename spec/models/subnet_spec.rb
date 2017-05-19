@@ -62,4 +62,14 @@ RSpec.describe Subnet, type: :model do
     expect(subnet.used_percentage).to eq (subnet.free_hosts / subnet.max_hosts * 100)
   end
 
+  it 'is classified as public' do
+    subnet = create(:subnet, base: '8.8.8.0')
+    expect(subnet.type).to eq 'public'
+  end
+
+  it 'is classified as private' do
+    subnet = create(:subnet, base: '10.70.25.0')
+    expect(subnet.type).to eq 'private'
+  end
+
 end
