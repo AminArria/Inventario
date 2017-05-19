@@ -5,7 +5,7 @@ class Subnet < ApplicationRecord
   validates :api_id, :base, :mask, presence: true
   validates :max_hosts, :used_hosts, numericality: {greater_than_or_equal_to: 0}
   validates_numericality_of :used_hosts, less_than_or_equal_to: :max_hosts
-  validates :type, inclusion: {in: ['public', 'private']}, allow_blank: true
+  validates :public, inclusion: {in: [true, false]}, allow_blank: true
 
   before_save :define_type
 
@@ -26,9 +26,9 @@ class Subnet < ApplicationRecord
   def define_type
     case base
     when /^10\./, /^172\.(1[6-9]|2[0-9]|3[01])\./, /^192\.168\./
-      self.type = 'private'
+      self.public = false
     else
-      self.type = 'public'
+      self.public = true
     end
   end
 end

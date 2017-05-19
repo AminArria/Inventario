@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20170519171222) do
     t.datetime "updated_at", null: false
     t.integer "max_hosts", default: 0
     t.integer "used_hosts", default: 0
-    t.string "type"
+    t.boolean "public"
     t.index ["section_id"], name: "index_subnets_on_section_id"
   end
 

@@ -64,12 +64,12 @@ RSpec.describe Subnet, type: :model do
 
   it 'is classified as public' do
     subnet = create(:subnet, base: '8.8.8.0')
-    expect(subnet.type).to eq 'public'
+    expect(subnet.public).to be true
   end
 
   it 'is classified as private' do
     subnet = create(:subnet, base: '10.70.25.0')
-    expect(subnet.type).to eq 'private'
+    expect(subnet.public).to be false
   end
 
 end
