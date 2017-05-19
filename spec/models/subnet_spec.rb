@@ -29,12 +29,6 @@ RSpec.describe Subnet, type: :model do
     expect(subnet.errors[:section]).to include("must exist")
   end
 
-  it 'is invalid if used_hosts exceed max_hosts' do
-    subnet = build(:subnet, used_hosts: 2, max_hosts: 1)
-    subnet.valid?
-    expect(subnet.errors[:used_hosts]).to include("must be less than")
-  end
-
   it 'is invalid if used_hosts is negative' do
     subnet = build(:subnet, used_hosts: -1)
     subnet.valid?
@@ -44,7 +38,13 @@ RSpec.describe Subnet, type: :model do
   it 'is invalid if max_hosts is negative' do
     subnet = build(:subnet, max_hosts: -1)
     subnet.valid?
-    expect(subnet.errors[:used_hosts]).to include("must be greater than or equal to 0")
+    expect(subnet.errors[:max_hosts]).to include("must be greater than or equal to 0")
+  end
+
+  it 'is invalid if used_hosts exceed max_hosts' do
+    subnet = build(:subnet, used_hosts: 2, max_hosts: 1)
+    subnet.valid?
+    expect(subnet.errors[:used_hosts]).to include("must be less than or equal to 1")
   end
 
   it 'gives the number of free hosts' do
