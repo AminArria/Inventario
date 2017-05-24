@@ -1,34 +1,37 @@
-<h1>Subnets</h1>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Subredes</h3>
+  </div>
+  <div class="panel-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Subred</th>
+          <th>Sección</th>
+          <th>Descripción</th>
+          <th>En Uso</th>
+          <th>Disponibilidad</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>API ID</th>
-      <th>Base</th>
-      <th>Mascara</th>
-      <th>Sección</th>
-      <th>Descripción</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @subnets.each do |subnet| %>
-      <tr>
-        <td><%= subnet.api_id %></td>
-        <td><%= subnet.base %></td>
-        <td><%= subnet.mask %></td>
-        <td><%= link_to subnet.section.name, section_path(subnet.section) %></td>
-        <td><%= subnet.description %></td>
-        <td>
-          <%= link_to 'Show', subnet %>
-          <%= link_to 'Edit', edit_subnet_path(subnet) %>
-          <%= link_to 'Destroy', subnet, method: :delete, data: { confirm: 'Are you sure?' } %>
-          <%= link_to 'Direcciones IP', subnet_addresses_path(subnet) %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+      <tbody>
+        <% @subnets.each do |subnet| %>
+          <tr>
+            <td><%= link_to subnet.cidr, subnet_addresses_path(subnet) %></td>
+            <td><%= link_to subnet.section.name, section_path(subnet.section) %></td>
+            <td><%= subnet.description %></td>
+            <td><%= two_decimal_amount subnet.used_percentage %>%</td>
+            <td><%= two_decimal_amount subnet.free_percentage %>%</td>
+            <td>
+              <%= link_to 'Show', subnet %>
+              <%= link_to 'Edit', edit_subnet_path(subnet) %>
+              <%= link_to 'Destroy', subnet, method: :delete, data: { confirm: 'Are you sure?' } %>
+              <%= link_to 'Direcciones IP', subnet_addresses_path(subnet) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
