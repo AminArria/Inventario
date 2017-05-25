@@ -18,14 +18,6 @@
             <strong>Descripción:</strong>
             <%= @section.description %>
           </p>
-          <p>
-            <strong>Subredes</strong>
-            <ul>
-              <% @section.subnets.each do |subnet| %>
-                <li><%= link_to subnet.cidr, subnet_path(subnet) %></li>
-              <% end %>
-            </ul>
-          </p>
         </div>
         <div class="col-md-6 col-sm-12">
           <% ip_count = @section.public_addresses_count %>
@@ -52,7 +44,7 @@
         </div>
       </div>
       <%= link_to icon("arrow-left", "Secciones"), sections_path, class: "btn btn-warning" %>
-      <%= link_to "Subredes", section_subnets_path(@section), class: "btn btn-primary" %>
+      <%= link_to "Ver Subredes", section_subnets_path(@section), class: "btn btn-primary" %>
     </div>
   </div>
 </div>
