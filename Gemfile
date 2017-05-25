@@ -1,11 +1,15 @@
 source 'https://rubygems.org'
 
+# Configuration
 gem 'figaro'
 
 # Front end stuff
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'jquery-rails'
 gem 'font-awesome-sass'
+
+# Reports
+gem 'axlsx_rails'
 
 # PhPIpam API wrapper
 gem 'ruby-phpipam', git: 'git://github.com/AminArria/ruby-phpipam'
