@@ -1,29 +1,57 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Api:</strong>
-  <%= @subnet.api_id %>
-</p>
-
-<p>
-  <strong>Base:</strong>
-  <%= @subnet.base %>
-</p>
-
-<p>
-  <strong>Mask:</strong>
-  <%= @subnet.mask %>
-</p>
-
-<p>
-  <strong>Section:</strong>
-  <%= @subnet.section %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @subnet.description %>
-</p>
-
-<%= link_to 'Edit', edit_subnet_path(@subnet) %> |
-<%= link_to 'Back', subnets_path %>
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Subred <%= @subnet.cidr %></h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <p>
+            <strong>API ID:</strong>
+            <%= @subnet.api_id %>
+          </p>
+          <p>
+            <strong>Sección:</strong>
+            <%= link_to @subnet.section.name, section_path(@subnet.section) %>
+          </p>
+          <p>
+            <strong>Base:</strong>
+            <%= @subnet.base %>
+          </p>
+          <p>
+            <strong>Mascara:</strong>
+            <%= @subnet.mask %>
+          </p>
+          <p>
+            <strong>Description:</strong>
+            <%= @subnet.description %>
+          </p>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <p>
+            <strong>Cantidad de IPs: </strong>
+            <%= @subnet.max_hosts %>
+          </p>
+          <p>
+            <strong>Cantidad de IPs en uso: </strong>
+            <%= @subnet.used_hosts %>
+          </p>
+          <p>
+            <strong>Cantidad de IPs disponibles: </strong>
+            <%= @subnet.free_hosts %>
+          </p>
+          <p>
+            <strong>En uso: </strong>
+            <%= two_decimal_amount @subnet.used_percentage %>
+          </p>
+          <p>
+            <strong>Disponibilidad: </strong>
+            <%= two_decimal_amount @subnet.free_percentage %>
+          </p>
+        </div>
+      </div>
+      <%= link_to icon("arrow-left", "Subredes"), section_subnets_path(@subnet.section), class: "btn btn-warning" %>
+      <%= link_to "Direcciones IP", subnet_addresses_path(@subnet), class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>

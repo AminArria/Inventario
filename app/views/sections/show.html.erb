@@ -1,19 +1,58 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Api:</strong>
-  <%= @section.api_id %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @section.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @section.description %>
-</p>
-
-<%= link_to 'Edit', edit_section_path(@section) %> |
-<%= link_to 'Back', sections_path %>
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Seccion <%= @section.name %></h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <p>
+            <strong>API ID:</strong>
+            <%= @section.api_id %>
+          </p>
+          <p>
+            <strong>Nombre:</strong>
+            <%= @section.name %>
+          </p>
+          <p>
+            <strong>Descripción:</strong>
+            <%= @section.description %>
+          </p>
+          <p>
+            <strong>Subredes</strong>
+            <ul>
+              <% @section.subnets.each do |subnet| %>
+                <li><%= link_to subnet.cidr, subnet_path(subnet) %></li>
+              <% end %>
+            </ul>
+          </p>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <% ip_count = @section.public_addresses_count %>
+          <p>
+            <strong>Cantidad de IPs publicas: </strong>
+            <%= ip_count[:max] %>
+          </p>
+          <p>
+            <strong>Cantidad de IPs publicas en uso: </strong>
+            <%= ip_count[:used] %>
+          </p>
+          <p>
+            <strong>Cantidad de IPs publicas libres: </strong>
+            <%= ip_count[:free] %>
+          </p>
+          <p>
+            <strong>En uso: </strong>
+            <span class="used-percentage"><%= two_decimal_amount ip_count[:used_percent] %>%</span>
+          </p>
+          <p>
+            <strong>Disponibilidad: </strong>
+            <span class="free-percentage"><%= two_decimal_amount ip_count[:free_percent] %>%</span>
+          </p>
+        </div>
+      </div>
+      <%= link_to icon("arrow-left", "Secciones"), sections_path, class: "btn btn-warning" %>
+      <%= link_to "Subredes", section_subnets_path(@section), class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>

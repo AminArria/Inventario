@@ -1,19 +1,22 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Redes</h3>
-  </div>
-  <div class="panel-body">
-    <% @sections.each do |section| %>
-      <% ip_count = section.public_addresses_count %>
-      <div id=<%= "section_#{section.id}" %>>
-        <h4><%= section.name %></h4>
-        <p>Cantidad de IPs publicas: <%= ip_count[:max] %></p>
-        <p>Cantidad de IPs publicas en uso: <%= ip_count[:used] %></p>
-        <p>Cantidad de IPs publicas libres: <%= ip_count[:free] %></p>
-        <p>En uso: <span class="used-percentage"><%= two_decimal_amount ip_count[:used_percent] %>%</span></p>
-        <p>Disponibilidad: <span class="free-percentage"><%= two_decimal_amount ip_count[:free_percent] %>%</span></p>
-        <%= link_to "Detalles", section_subnets_path(section), class: "btn btn-primary" %>
-      </div>
-    <% end %>
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Redes</h3>
+    </div>
+    <div class="panel-body">
+      <% @sections.each do |section| %>
+        <% ip_count = section.public_addresses_count %>
+        <div id=<%= "section_#{section.id}" %>>
+          <h4><%= section.name %></h4>
+          <p>Cantidad de IPs publicas: <%= ip_count[:max] %></p>
+          <p>Cantidad de IPs publicas en uso: <%= ip_count[:used] %></p>
+          <p>Cantidad de IPs publicas libres: <%= ip_count[:free] %></p>
+          <p>En uso: <span class="used-percentage"><%= two_decimal_amount ip_count[:used_percent] %>%</span></p>
+          <p>Disponibilidad: <span class="free-percentage"><%= two_decimal_amount ip_count[:free_percent] %>%</span></p>
+          <%= link_to icon("search", "Sección"), section_path(section), class: "btn btn-success" %>
+          <%= link_to "Detalles Subredes", section_subnets_path(section), class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

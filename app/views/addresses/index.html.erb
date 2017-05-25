@@ -1,31 +1,32 @@
-<h1>Addresses</h1>
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Direcciones IP de <%= link_to @subnet.cidr, subnet_path(@subnet) %></h3>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>IP</th>
+              <th>En uso</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>API ID</th>
-      <th>IP</th>
-      <th>Subred</th>
-      <th>En uso</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @addresses.each do |address| %>
-      <tr>
-        <td><%= address.api_id %></td>
-        <td><%= address.ip %></td>
-        <td><%= link_to address.subnet.base, subnet_path(address.subnet) %></td>
-        <td><%= address.active %></td>
-        <td>
-          <%= link_to 'Show', address %>
-          <%= link_to 'Edit', edit_address_path(address) %>
-          <%= link_to 'Destroy', address, method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+          <tbody>
+            <% @addresses.each do |address| %>
+              <tr>
+                <td><%= address.ip %></td>
+                <td><%= address.active ? "Si" : "No" %></td>
+                <td>
+                  <%#= link_to(icon('search'), address_path(address)) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

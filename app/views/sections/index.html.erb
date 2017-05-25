@@ -1,33 +1,37 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Secciones</h3>
-  </div>
-  <div class="panel-body">
-    Panel content
-  </div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>API ID</th>
-        <th>Nombre</th>
-        <th>Descripcion</th>
-        <th >Acciones</th>
-      </tr>
-    </thead>
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Secciones</h3>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>En Uso</th>
+              <th>Disponibilidad</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
 
-    <tbody>
-      <% @sections.each do |section| %>
-        <tr>
-          <td><%= section.api_id %></td>
-          <td><%= section.name %></td>
-          <td><%= section.description %></td>
-          <td>
-            <%= link_to 'Detalles', section %>
-            <%= link_to 'Editar', edit_section_path(section) %>
-            <%= link_to 'Subredes', section_subnets_path(section) %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+          <tbody>
+            <% @sections.each do |section| %>
+              <% ip_count = section.public_addresses_count %>
+              <tr>
+                <td><%= section.name %></td>
+                <td><%= section.description %></td>
+                <td><%= two_decimal_amount ip_count[:used_percent] %>%</td>
+                <td><%= two_decimal_amount ip_count[:free_percent] %>%</td>
+                <td>
+                  <%= link_to(icon('search'), section_path(section)) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
