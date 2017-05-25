@@ -8,7 +8,7 @@ class Subnet < ApplicationRecord
   validates :public, inclusion: {in: [true, false]}, allow_blank: true
 
   before_save :define_type
-  # before_create :set_hosts
+  before_create :set_hosts
 
   def free_hosts
     self.max_hosts - self.used_hosts
@@ -26,6 +26,11 @@ class Subnet < ApplicationRecord
     "#{self.base}/#{self.mask}"
   end
 
+  def update_used_hosts!(amount)
+    self.used_hosts += amount
+    self.save!
+  end
+
   private
 
   def define_type
@@ -37,8 +42,8 @@ class Subnet < ApplicationRecord
     end
   end
 
-  # def set_hosts
-  #   self.max_hosts = 2 ** (32-self.mask) - 2
-  #   self.used_hosts = 0
-  # end
+  def set_hosts
+    self.max_hosts = 2 ** (32-self.mask) - 2
+    self.used_hosts = 0
+  end
 end
