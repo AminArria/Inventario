@@ -12,10 +12,13 @@
 
 ActiveRecord::Schema.define(version: 20170525153400) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "addresses", force: :cascade do |t|
     t.integer "api_id"
     t.string "ip"
-    t.integer "subnet_id"
+    t.bigint "subnet_id"
     t.boolean "active", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -34,7 +37,7 @@ ActiveRecord::Schema.define(version: 20170525153400) do
     t.integer "api_id"
     t.string "base"
     t.integer "mask"
-    t.integer "section_id"
+    t.bigint "section_id"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -43,4 +46,6 @@ ActiveRecord::Schema.define(version: 20170525153400) do
     t.index ["section_id"], name: "index_subnets_on_section_id"
   end
 
+  add_foreign_key "addresses", "subnets"
+  add_foreign_key "subnets", "sections"
 end
