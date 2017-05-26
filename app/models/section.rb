@@ -24,6 +24,7 @@ class Section < ApplicationRecord
 
   def self.all_public_addresses_count
     counts = {
+      count: Subnet.where(public: true).count,
       max:  Subnet.where(public: true).sum("max_hosts"),
       used: Subnet.where(public: true).joins(:addresses).count,
     }
