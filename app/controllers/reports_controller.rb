@@ -1,5 +1,7 @@
 class ReportsController < ApplicationController
   def general
+    @ip_count = Section.all_public_addresses_count
+    @subnets = Subnet.where(public: true)
     render xlsx: 'general', filename: "Informe_Capacidades_#{xls_date_format(DateTime.now)}"
   end
 
