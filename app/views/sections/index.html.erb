@@ -26,6 +26,7 @@
                 <td><%= two_decimal_amount ip_count[:free_percent] %>%</td>
                 <td>
                   <%= link_to(icon('search'), section_path(section)) %>
+                  <%= link_to(icon('list'), section_subnets_path(section)) %>
                 </td>
               </tr>
             <% end %>

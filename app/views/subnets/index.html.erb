@@ -25,6 +25,7 @@
                 <td><%= two_decimal_amount subnet.free_percentage %>%</td>
                 <td>
                   <%= link_to(icon('search'), subnet_path(subnet)) %>
+                  <%= link_to(icon('list'), subnet_addresses_path(subnet)) %>
                 </td>
               </tr>
             <% end %>
