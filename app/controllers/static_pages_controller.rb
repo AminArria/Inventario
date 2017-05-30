@@ -1,5 +1,6 @@
 class StaticPagesController < ApplicationController
   def dashboard
-    @sections_results = Section.all_public_addresses_count
+    @sections_public = Section.addresses_count(public: true)
+    @sections_private = Section.addresses_count(public: false)
   end
 end

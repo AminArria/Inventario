@@ -10,12 +10,24 @@
     </div>
     <div class="panel-body">
       <h4>Estado de Redes</h4>
-      <p>Cantidad de Subredes de IPs publicas: <%= @sections_results[:count] %></p>
-      <p>Cantidad de IPs publicas: <%= @sections_results[:max] %></p>
-      <p>Cantidad de IPs publicas en uso: <%= @sections_results[:used] %></p>
-      <p>Cantidad de IPs publicas libres: <%= @sections_results[:free] %></p>
-      <p>En uso: <span class="used-percentage"><%= two_decimal_amount @sections_results[:used_percent] %>%</span></p>
-      <p>Disponibilidad: <span class="free-percentage"><%= two_decimal_amount @sections_results[:free_percent] %>%</span></p>
+      <div class="row">
+        <div class="col-sm-4">
+          <p>Cantidad de Subredes de IPs publicas: <%= @sections_public[:count] %></p>
+          <p>Cantidad de IPs publicas: <%= @sections_public[:max] %></p>
+          <p>Cantidad de IPs publicas en uso: <%= @sections_public[:used] %></p>
+          <p>Cantidad de IPs publicas libres: <%= @sections_public[:free] %></p>
+          <p>En uso: <span class="used-percentage"><%= two_decimal_amount @sections_public[:used_percent] %>%</span></p>
+          <p>Disponibilidad: <span class="free-percentage"><%= two_decimal_amount @sections_public[:free_percent] %>%</span></p>
+        </div>
+        <div class="col-sm-4">
+          <p>Cantidad de Subredes de IPs privadas: <%= @sections_private[:count] %></p>
+          <p>Cantidad de IPs privadas: <%= @sections_private[:max] %></p>
+          <p>Cantidad de IPs privadas en uso: <%= @sections_private[:used] %></p>
+          <p>Cantidad de IPs privadas libres: <%= @sections_private[:free] %></p>
+          <p>En uso: <span class="used-percentage"><%= two_decimal_amount @sections_private[:used_percent] %>%</span></p>
+          <p>Disponibilidad: <span class="free-percentage"><%= two_decimal_amount @sections_private[:free_percent] %>%</span></p>
+        </div>
+      </div>
       <%= link_to icon("search", "Ver Secciones"), sections_path, class: "btn btn-success" %>
     </div>
   </div>

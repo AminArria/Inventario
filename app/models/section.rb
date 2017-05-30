@@ -3,10 +3,10 @@ class Section < ApplicationRecord
 
   validates :api_id, :name, presence: true
 
-  def public_addresses_count
+  def addresses_count(public: true)
     counts = {
-      max:  self.subnets.where(public: true).sum("max_hosts"),
-      used: self.subnets.where(public: true).joins(:addresses).count,
+      max:  self.subnets.where(public: public).sum("max_hosts"),
+      used: self.subnets.where(public: public).joins(:addresses).count,
     }
 
     if counts[:max] == 0
@@ -22,11 +22,11 @@ class Section < ApplicationRecord
     counts
   end
 
-  def self.all_public_addresses_count
+  def self.addresses_count(public: true)
     counts = {
-      count: Subnet.where(public: true).count,
-      max:  Subnet.where(public: true).sum("max_hosts"),
-      used: Subnet.where(public: true).joins(:addresses).count,
+      count: Subnet.where(public: public).count,
+      max:  Subnet.where(public: public).sum("max_hosts"),
+      used: Subnet.where(public: public).joins(:addresses).count,
     }
 
     if counts[:max] == 0
