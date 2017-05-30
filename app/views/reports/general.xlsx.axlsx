@@ -2,10 +2,19 @@ wb = xlsx_package.workbook
 
 # Styles
 # Sadly axlsx_rails doesn't support a yield or partial for this
+# and must be copied to each xlsx.axlsx
 h1 = wb.styles.add_style(\
+  fg_color: "ffffff",
+  b: true,
   bg_color: "004586", \
   sz: 12, \
   border: {style: :thin, color: "000000"}, \
+  alignment: {horizontal: :center, vertical: :center}
+  )
+data_first = wb.styles.add_style(\
+  b: true,
+  sz: 12, \
+  border: {style: :thick, color: "000000"}, \
   alignment: {horizontal: :center, vertical: :center}
   )
 data = wb.styles.add_style(\
@@ -16,13 +25,16 @@ data = wb.styles.add_style(\
 
 high_use_dxf = wb.styles.add_style(bg_color: "ff0000", type: :dxf)
 mid_use_dxf = wb.styles.add_style(bg_color: "ffff00", type: :dxf)
-low_use_dxf = wb.styles.add_style(bg_color: "008000", type: :dxf)
+low_use_dxf = wb.styles.add_style(bg_color: "14da14", type: :dxf)
 high_use = wb.styles.add_style(b: true, bg_color: "ff0000", border: {style: :thin, color: "000000"}, alignment: {horizontal: :center, vertical: :center})
 mid_use = wb.styles.add_style(b: true, bg_color: "ffff00", border: {style: :thin, color: "000000"}, alignment: {horizontal: :center, vertical: :center})
-low_use = wb.styles.add_style(b: true, bg_color: "008000", border: {style: :thin, color: "000000"}, alignment: {horizontal: :center, vertical: :center})
+low_use = wb.styles.add_style(b: true, bg_color: "14da14", border: {style: :thin, color: "000000"}, alignment: {horizontal: :center, vertical: :center})
 
 legend = wb.styles.add_style(b: true, alignment: {horizontal: :center, vertical: :center})
+# 
 # End styles
+# 
+
 
 wb.add_worksheet(name: "General") do |sheet|
   # Headers
@@ -36,12 +48,14 @@ wb.add_worksheet(name: "General") do |sheet|
   sheet.add_row [nil, "81%-100%", "61%-80%", "<= 60%"], style: [nil, high_use, mid_use, low_use]
 
 
-  # Formatting and styling
+  # Sheet specifci formatting and styling
   sheet.add_conditional_formatting("E2:E2", { :type => :cellIs, :operator => :lessThan, :formula => "61", :dxfId => low_use_dxf, :priority => 1 })
   sheet.add_conditional_formatting("E2:E2", { :type => :cellIs, :operator => :lessThan, :formula => "81", :dxfId => mid_use_dxf, :priority => 1 })
   sheet.add_conditional_formatting("E2:E2", { :type => :cellIs, :operator => :greaterThanOrEqual, :formula => "81", :dxfId => high_use_dxf, :priority => 1 })
 
   sheet.merge_cells("B3:D3")
+
+  sheet["A2"].b = true
 end
 
 render 'network', locals: {wb: wb, subnets: @subnets}
