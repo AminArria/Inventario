@@ -1,0 +1,89 @@
+wb = xlsx_package.workbook
+
+# Styles
+# Sadly axlsx_rails doesn't support a yield or partial for this
+# and must be copied to each xlsx.axlsx
+h1 = wb.styles.add_style(\
+  fg_color: "ffffff",
+  b: true,
+  bg_color: "004586", \
+  sz: 12, \
+  border: {style: :thin, color: "000000"}, \
+  alignment: {horizontal: :center, vertical: :center}
+  )
+data_first = wb.styles.add_style(\
+  b: true,
+  sz: 12, \
+  border: {style: :thick, color: "000000"}, \
+  alignment: {horizontal: :center, vertical: :center}
+  )
+data = wb.styles.add_style(\
+  sz: 12, \
+  border: {style: :thick, color: "000000"}, \
+  alignment: {horizontal: :center, vertical: :center}
+  )
+
+high_use_dxf = wb.styles.add_style(bg_color: "ff0000", type: :dxf)
+mid_use_dxf = wb.styles.add_style(bg_color: "ffff00", type: :dxf)
+low_use_dxf = wb.styles.add_style(bg_color: "14da14", type: :dxf)
+high_use = wb.styles.add_style(b: true, bg_color: "ff0000", border: {style: :thin, color: "000000"}, alignment: {horizontal: :center, vertical: :center})
+mid_use = wb.styles.add_style(b: true, bg_color: "ffff00", border: {style: :thin, color: "000000"}, alignment: {horizontal: :center, vertical: :center})
+low_use = wb.styles.add_style(b: true, bg_color: "14da14", border: {style: :thin, color: "000000"}, alignment: {horizontal: :center, vertical: :center})
+
+legend = wb.styles.add_style(b: true, alignment: {horizontal: :center, vertical: :center})
+#
+# End styles
+#
+
+
+wb.add_worksheet(name: "General") do |sheet|
+  # Headers
+  sheet.add_row ["Informe Capacidades #{DateTime.now.strftime('%d/%m/%Y')}"], style: legend
+  sheet.add_row ["Servicio/Plataforma", "Capacidad Total", "Servicios Activos", "Servicios Disponibles", "% en Uso", "% Disponibilidad", "Servicios Comprometidos"], style: h1
+
+  # Fill cells with data
+  if @private_ip_count
+    sheet.add_row ["Direcciones IP Privadas", @private_ip_count[:max], @private_ip_count[:used], @private_ip_count[:free], two_decimal_amount(@private_ip_count[:used_percent], '.'), two_decimal_amount(@private_ip_count[:free_percent], '.'), 0], style: data
+  end
+  if @public_ip_count
+    sheet.add_row ["Direcciones IP Públicas", @public_ip_count[:max], @public_ip_count[:used], @public_ip_count[:free], two_decimal_amount(@public_ip_count[:used_percent], '.'), two_decimal_amount(@public_ip_count[:free_percent], '.'), 0], style: data
+  end
+
+  # Leyend
+  sheet.add_row [nil, "Utilización"], style: legend
+  sheet.add_row [nil, "81%-100%", "61%-80%", "<= 60%"], style: [nil, high_use, mid_use, low_use]
+
+
+  # Sheet specific formatting and styling
+  rows = sheet.rows.count - 4 #The -4 because those come from headers and leyend
+
+  if rows > 0
+    sheet.add_conditional_formatting("E3:E#{3+rows-1}", { :type => :cellIs, :operator => :lessThan, :formula => "61", :dxfId => low_use_dxf, :priority => 1 })
+    sheet.add_conditional_formatting("E3:E#{3+rows-1}", { :type => :cellIs, :operator => :lessThan, :formula => "81", :dxfId => mid_use_dxf, :priority => 1 })
+    sheet.add_conditional_formatting("E3:E#{3+rows-1}", { :type => :cellIs, :operator => :greaterThanOrEqual, :formula => "81", :dxfId => high_use_dxf, :priority => 1 })
+  end
+
+  sheet.merge_cells("A1:G1")
+  sheet.merge_cells("B#{3+rows}:D#{3+rows}")
+
+  if rows > 0
+    sheet["A3:A#{2+rows}"].each do |cell|
+      cell.b = true
+    end
+  end
+
+  # Hide columns
+  # sheet.rows[1..(rows+1)].each do |row|
+  #   last_merge = 0
+  #   if params[:info][:total] != "true"
+  #     row.cells[1].merge row.cells[0]
+  #     last_merge = 1
+  #   end
+  #   if params[:info][:used] != "true"
+  #     row.cells[2].merge row.cells[last_merge == 1 ? 0 : 1]
+  #     last_merge += 1
+  #   end
+  # end
+end
+
+render 'network', locals: {wb: wb, subnets: @subnets}

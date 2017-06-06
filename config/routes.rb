@@ -3,8 +3,10 @@ Rails.application.routes.draw do
 
   scope :reports, as: :reports do
     get 'general', to: "reports#general", as: 'general'
+    get 'new', to: "reports#new", as: 'new'
+    get 'create', to: "reports#create", as: 'create'
   end
-  
+
   resources :sections, except: [:create, :destroy, :new] do
     resources :subnets, shallow: true do
       resources :addresses

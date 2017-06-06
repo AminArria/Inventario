@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Reporte</h3>
+    </div>
+    <div class="panel-body">
+      <h4>Columnas</h4>
+
+      <h4>Redes</h4>
+      <%= form_tag reports_create_path(format: :xlsx), method: :get do %>
+        <%= label_tag(:network_active, class: 'radio-inline') do %>
+          <%= radio_button_tag("network[active]", true) %>
+          <strong>Mostrar</strong>
+        <% end %>
+        <%= label_tag(:network_active, class: 'radio-inline') do %>
+          <%= radio_button_tag("network[active]", false, true) %>
+          <strong>No mostrar</strong>
+        <% end %>
+
+        <div class="checkbox">
+          <%= label_tag do %>
+            <%= check_box_tag "network[public]", true %>
+            IPs publicas
+          <% end %>
+        </div>
+        <div class="checkbox">
+          <%= label_tag do %>
+            <%= check_box_tag "network[private]", true %>
+            IPs privadas
+          <% end %>
+        </div>
+
+        <%= button_tag "Generar", type: 'submit' %>
+      <% end %>
+    </div>
+  </div>
+</div>
