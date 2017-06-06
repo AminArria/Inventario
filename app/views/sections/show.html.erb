@@ -5,7 +5,7 @@
     </div>
     <div class="panel-body">
       <div class="row">
-        <div class="col-md-6 col-sm-12">
+        <div class="col-md-12 col-sm-12">
           <p>
             <strong>API ID:</strong>
             <%= @section.api_id %>
@@ -20,7 +20,7 @@
           </p>
         </div>
         <div class="col-md-6 col-sm-12">
-          <% ip_count = @section.public_addresses_count %>
+          <% ip_count = @section.addresses_count %>
           <p>
             <strong>Cantidad de IPs publicas: </strong>
             <%= ip_count[:max] %>

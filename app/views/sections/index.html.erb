@@ -18,7 +18,7 @@
 
           <tbody>
             <% @sections.each do |section| %>
-              <% ip_count = section.public_addresses_count %>
+              <% ip_count = section.addresses_count %>
               <tr>
                 <td><%= section.name %></td>
                 <td><%= section.description %></td>
