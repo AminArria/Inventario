@@ -4,10 +4,48 @@
       <h3 class="panel-title">Reporte</h3>
     </div>
     <div class="panel-body">
-      <h4>Columnas</h4>
-
-      <h4>Redes</h4>
       <%= form_tag reports_create_path(format: :xlsx), method: :get do %>
+        <h4>Columnas</h4>
+        <%= hidden_field_tag "info[active]", true %>
+        <div class="checkbox">
+          <%= label_tag do %>
+            <%= check_box_tag "info[total]", true %>
+            Capacidad Total
+          <% end %>
+        </div>
+        <div class="checkbox">
+          <%= label_tag do %>
+            <%= check_box_tag "info[used]", true %>
+            Servicios activos
+          <% end %>
+        </div>
+        <div class="checkbox">
+          <%= label_tag do %>
+            <%= check_box_tag "info[free]", true %>
+            Servicios Disponibles
+          <% end %>
+        </div>
+        <div class="checkbox">
+          <%= label_tag do %>
+            <%= check_box_tag "info[used_percent]", true %>
+            &percnt; en uso
+          <% end %>
+        </div>
+        <div class="checkbox">
+          <%= label_tag do %>
+            <%= check_box_tag "info[free_percent]", true %>
+            &percnt; disponibilidad
+          <% end %>
+        </div>
+        <div class="checkbox">
+          <%= label_tag do %>
+            <%= check_box_tag "info[reserved]", true %>
+            Servicios comprometidos
+          <% end %>
+        </div>
+
+
+        <h4>Redes</h4>
         <%= label_tag(:network_active, class: 'radio-inline') do %>
           <%= radio_button_tag("network[active]", true) %>
           <strong>Mostrar</strong>
@@ -17,6 +55,12 @@
           <strong>No mostrar</strong>
         <% end %>
 
+        <div class="checkbox">
+          <%= label_tag do %>
+            <%= check_box_tag "network[individual]", true %>
+            Hoja con detalles individuales
+          <% end %>
+        </div>
         <div class="checkbox">
           <%= label_tag do %>
             <%= check_box_tag "network[public]", true %>

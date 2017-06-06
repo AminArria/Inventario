@@ -73,17 +73,40 @@ wb.add_worksheet(name: "General") do |sheet|
   end
 
   # Hide columns
-  # sheet.rows[1..(rows+1)].each do |row|
-  #   last_merge = 0
-  #   if params[:info][:total] != "true"
-  #     row.cells[1].merge row.cells[0]
-  #     last_merge = 1
-  #   end
-  #   if params[:info][:used] != "true"
-  #     row.cells[2].merge row.cells[last_merge == 1 ? 0 : 1]
-  #     last_merge += 1
-  #   end
-  # end
+  sheet.rows[1..(rows+1)].each do |row|
+    first_merge = nil
+    last_merge = nil
+    if params[:info][:total] != "true"
+      row.cells[1].merge row.cells[0]
+      first_merge = 0
+      last_merge = 1
+    end
+    if params[:info][:used] != "true"
+      first_merge = first_merge ? first_merge : 1
+      last_merge = 2
+      row.cells[2].merge row.cells[first_merge]
+    end
+    if params[:info][:free] != "true"
+      first_merge = last_merge == 2 ? first_merge : 2
+      last_merge = 3
+      row.cells[3].merge row.cells[first_merge]
+    end
+    if params[:info][:used_percent] != "true"
+      first_merge = last_merge == 3 ? first_merge : 3
+      last_merge = 4
+      row.cells[4].merge row.cells[first_merge]
+    end
+    if params[:info][:free_percent] != "true"
+      first_merge = last_merge == 4 ? first_merge : 4
+      last_merge = 5
+      row.cells[5].merge row.cells[first_merge]
+    end
+    if params[:info][:used_percent] != "true"
+      first_merge = last_merge == 5 ? first_merge : 5
+      last_merge = 6
+      row.cells[6].merge row.cells[first_merge]
+    end
+  end
 end
 
-render 'network', locals: {wb: wb, subnets: @subnets}
+render 'network', locals: {wb: wb, subnets: @subnets, hide_columns: true} if params[:network][:individual]

@@ -63,4 +63,4 @@ wb.add_worksheet(name: "General") do |sheet|
   end
 end
 
-render 'network', locals: {wb: wb, subnets: @subnets}
+render 'network', locals: {wb: wb, subnets: @subnets, hide_columns: false}
