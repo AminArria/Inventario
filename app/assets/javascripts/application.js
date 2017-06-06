@@ -14,4 +14,9 @@
 //= require turbolinks
 //= require jquery
 //= require bootstrap-sprockets
+//= require datatables
 //= require_tree .
+
+$(document).on("turbolinks:load", function() {
+  $('#datatable').DataTable();
+});
