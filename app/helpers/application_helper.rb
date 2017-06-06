@@ -5,6 +5,8 @@ module ApplicationHelper
       ["static_pages"].include?(params["controller"]) ? "active" : ""
     when :network
       ["sections","subnets","addresses"].include?(params["controller"]) ? "active" : ""
+    when :report
+      ["reports"].include?(params["controller"]) ? "active" : ""
     else
       ""
     end
