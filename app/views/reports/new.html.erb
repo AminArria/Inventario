@@ -5,74 +5,79 @@
     </div>
     <div class="panel-body">
       <%= form_tag reports_create_path(format: :xlsx), method: :get do %>
-        <h4>Columnas</h4>
-        <%= hidden_field_tag "info[active]", true %>
-        <div class="checkbox">
-          <%= label_tag do %>
-            <%= check_box_tag "info[total]", true %>
-            Capacidad Total
-          <% end %>
+        <h4 id="report-columns">Columnas <i class="fa fa-chevron-down"></i></h4>
+        <div id="column-fields">
+          <%= hidden_field_tag "info[active]", true %>
+          <div class="checkbox">
+            <%= label_tag do %>
+              <%= check_box_tag "info[total]", true %>
+              Capacidad Total
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label_tag do %>
+              <%= check_box_tag "info[used]", true %>
+              Servicios activos
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label_tag do %>
+              <%= check_box_tag "info[free]", true %>
+              Servicios Disponibles
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label_tag do %>
+              <%= check_box_tag "info[used_percent]", true %>
+              &percnt; en uso
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label_tag do %>
+              <%= check_box_tag "info[free_percent]", true %>
+              &percnt; disponibilidad
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label_tag do %>
+              <%= check_box_tag "info[reserved]", true %>
+              Servicios comprometidos
+            <% end %>
+          </div>
         </div>
-        <div class="checkbox">
-          <%= label_tag do %>
-            <%= check_box_tag "info[used]", true %>
-            Servicios activos
-          <% end %>
-        </div>
-        <div class="checkbox">
-          <%= label_tag do %>
-            <%= check_box_tag "info[free]", true %>
-            Servicios Disponibles
-          <% end %>
-        </div>
-        <div class="checkbox">
-          <%= label_tag do %>
-            <%= check_box_tag "info[used_percent]", true %>
-            &percnt; en uso
-          <% end %>
-        </div>
-        <div class="checkbox">
-          <%= label_tag do %>
-            <%= check_box_tag "info[free_percent]", true %>
-            &percnt; disponibilidad
-          <% end %>
-        </div>
-        <div class="checkbox">
-          <%= label_tag do %>
-            <%= check_box_tag "info[reserved]", true %>
-            Servicios comprometidos
-          <% end %>
-        </div>
+        <hr>
 
+        <h4 id="report-networks">Redes <i class="fa fa-chevron-down"></i></h4>
+        <div id="network-fields">
+          <%= label_tag(:network_active, class: 'radio-inline') do %>
+            <%= radio_button_tag("network[active]", true) %>
+            <strong>Mostrar</strong>
+          <% end %>
+          <%= label_tag(:network_active, class: 'radio-inline') do %>
+            <%= radio_button_tag("network[active]", false, true) %>
+            <strong>No mostrar</strong>
+          <% end %>
 
-        <h4>Redes</h4>
-        <%= label_tag(:network_active, class: 'radio-inline') do %>
-          <%= radio_button_tag("network[active]", true) %>
-          <strong>Mostrar</strong>
-        <% end %>
-        <%= label_tag(:network_active, class: 'radio-inline') do %>
-          <%= radio_button_tag("network[active]", false, true) %>
-          <strong>No mostrar</strong>
-        <% end %>
-
-        <div class="checkbox">
-          <%= label_tag do %>
-            <%= check_box_tag "network[individual]", true %>
-            Hoja con detalles individuales
-          <% end %>
+          <div class="checkbox">
+            <%= label_tag do %>
+              <%= check_box_tag "network[individual]", true %>
+              Hoja con detalles individuales
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label_tag do %>
+              <%= check_box_tag "network[public]", true %>
+              IPs publicas
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label_tag do %>
+              <%= check_box_tag "network[private]", true %>
+              IPs privadas
+            <% end %>
+          </div>
         </div>
-        <div class="checkbox">
-          <%= label_tag do %>
-            <%= check_box_tag "network[public]", true %>
-            IPs publicas
-          <% end %>
-        </div>
-        <div class="checkbox">
-          <%= label_tag do %>
-            <%= check_box_tag "network[private]", true %>
-            IPs privadas
-          <% end %>
-        </div>
+        <hr>
 
         <%= button_tag "Generar", type: 'submit' %>
       <% end %>
