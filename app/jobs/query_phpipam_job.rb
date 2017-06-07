@@ -20,21 +20,21 @@ class QueryPhpipamJob < ApplicationJob
         end
 
         begin
-          now = DateTime.now 
+          now = DateTime.now
+          active_addresses = []
           ipam_sub.addresses.each do |ipam_addr|
             address = Address.find_by(api_id: ipam_addr.id)
-            if address 
-              if address.active
-                address.touch
-              else 
+            if address
+              unless address.active
                 address.update_attributes(active: true)
               end
             else
-              Address.create!(api_id: ipam_addr.id, ip: ipam_addr.ip, subnet: subnet, active: true)
+              address = Address.create!(api_id: ipam_addr.id, ip: ipam_addr.ip, subnet: subnet, active: true)
             end
+            active_addresses << address.id
           end
 
-          subnet.addresses.where("updated_at < ?", now).each do |addr|
+          subnet.addresses.where.not(id: active_addresses).each do |addr|
             addr.update_attributes(active: false)
           end
         rescue Phpipam::RequestFailed => e
