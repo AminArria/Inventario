@@ -27,4 +27,13 @@ feature "Dashboard" do
     expect(page).to have_content "0,00%" # Private IPs used percentage
     expect(page).to have_content "100,00%" # Private IPs free percentage
   end
+
+  scenario "generate report" do
+    visit root_path
+
+    click_on "Generar Reporte"
+
+    expect(page.response_headers["Content-Type"]).to eq "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    expect(page.response_headers["Content-Disposition"]).to eq "attachment; filename=\"Informe_Capacidades_09_06_2017.xlsx\""
+  end
 end
