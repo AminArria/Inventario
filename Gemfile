@@ -15,7 +15,7 @@ gem 'axlsx', '2.1.0.pre'
 gem 'axlsx_rails'
 
 # PhPIpam API wrapper
-gem 'ruby-phpipam', git: 'git://github.com/AminArria/ruby-phpipam'
+gem 'ruby_phpipam'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.0'
