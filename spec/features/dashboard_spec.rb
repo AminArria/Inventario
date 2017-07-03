@@ -34,6 +34,6 @@ feature "Dashboard" do
     click_on "Generar Reporte"
 
     expect(page.response_headers["Content-Type"]).to eq "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    expect(page.response_headers["Content-Disposition"]).to eq "attachment; filename=\"Informe_Capacidades_09_06_2017.xlsx\""
+    expect(page.response_headers["Content-Disposition"]).to eq "attachment; filename=\"Informe_Capacidades_#{DateTime.now.strftime('%d_%m_%Y')}.xlsx\""
   end
 end
