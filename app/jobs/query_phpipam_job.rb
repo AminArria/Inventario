@@ -2,9 +2,9 @@ class QueryPhpipamJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    Phpipam.authenticate
+    RubyPhpipam.authenticate
 
-    Phpipam::Section.get_all.each do |ipam_sec|
+    RubyPhpipam::Section.get_all.each do |ipam_sec|
       puts "Seccion #{ipam_sec.name}"
       section = Section.find_by(api_id: ipam_sec.id)
       unless section
@@ -37,7 +37,7 @@ class QueryPhpipamJob < ApplicationJob
           subnet.addresses.where.not(id: active_addresses).each do |addr|
             addr.update_attributes(active: false)
           end
-        rescue Phpipam::RequestFailed => e
+        rescue RubyPhpipam::RequestFailed => e
           puts "FALLO"
         end
       end
