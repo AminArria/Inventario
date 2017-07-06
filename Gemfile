@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 ruby '2.4.0'
 
+gem 'que'
+
 # Configuration
 gem 'figaro'
 
@@ -16,6 +18,8 @@ gem 'axlsx_rails'
 
 # PhPIpam API wrapper
 gem 'ruby_phpipam'
+
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.0'
