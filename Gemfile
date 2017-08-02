@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 ruby '2.4.0'
 
-gem 'que'
+gem 'delayed_job_active_record'
+gem 'rbvmomi'
 
 # Configuration
 gem 'figaro'
