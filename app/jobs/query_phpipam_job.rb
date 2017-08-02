@@ -5,7 +5,7 @@ class QueryPhpipamJob < ApplicationJob
     RubyPhpipam.authenticate
 
     RubyPhpipam::Section.get_all.each do |ipam_sec|
-      puts "Seccion #{ipam_sec.name}"
+      # puts "Seccion #{ipam_sec.name}"
       section = Section.find_by(api_id: ipam_sec.id)
       unless section
         section = Section.create!(api_id: ipam_sec.id, name: ipam_sec.name, description: ipam_sec.description)
@@ -13,7 +13,7 @@ class QueryPhpipamJob < ApplicationJob
 
       ipam_sec.subnets.each do |ipam_sub|
         next if ipam_sub.subnet.blank?
-        puts "Subred #{ipam_sub.id}: #{ipam_sub.subnet}/#{ipam_sub.mask}"
+        # puts "Subred #{ipam_sub.id}: #{ipam_sub.subnet}/#{ipam_sub.mask}"
         subnet = Subnet.find_by(api_id: ipam_sub.id)
         unless subnet
           subnet = Subnet.create!(api_id: ipam_sub.id, base: ipam_sub.subnet, mask: ipam_sub.mask, section: section,description: ipam_sub.description)
@@ -38,7 +38,7 @@ class QueryPhpipamJob < ApplicationJob
             addr.update_attributes(active: false)
           end
         rescue RubyPhpipam::RequestFailed => e
-          puts "FALLO"
+          # puts "FALLO"
         end
       end
     end
