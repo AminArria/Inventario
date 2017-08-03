@@ -32,12 +32,12 @@ RSpec.describe Cluster, type: :model do
   it 'is invalid if cpu_used is greater than cpu_total' do
     cluster = build(:cluster, cpu_total: 10, cpu_used: 11)
     cluster.valid?
-    expect(cluster.errors[:cpu_used]).to include("must be less than 10.0")
+    expect(cluster.errors[:cpu_used]).to include("must be less than or equal to 10.0")
   end
 
   it 'is invalid if memory_used is greater than memory_total' do
     cluster = build(:cluster, memory_total: 10, memory_used: 11)
     cluster.valid?
-    expect(cluster.errors[:memory_used]).to include("must be less than 10.0")
+    expect(cluster.errors[:memory_used]).to include("must be less than or equal to 10.0")
   end
 end

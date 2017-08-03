@@ -32,12 +32,12 @@ RSpec.describe Host, type: :model do
   it 'is invalid if cpu_used is greater than cpu_total' do
     host = build(:host, cpu_total: 10, cpu_used: 11)
     host.valid?
-    expect(host.errors[:cpu_used]).to include("must be less than 10.0")
+    expect(host.errors[:cpu_used]).to include("must be less than or equal to 10.0")
   end
 
   it 'is invalid if memory_used is greater than memory_total' do
     host = build(:host, memory_total: 10, memory_used: 11)
     host.valid?
-    expect(host.errors[:memory_used]).to include("must be less than 10.0")
+    expect(host.errors[:memory_used]).to include("must be less than or equal to 10.0")
   end
 end
