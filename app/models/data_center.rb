@@ -1,0 +1,2 @@
+class DataCenter < ApplicationRecord
+end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170802135052) do
+ActiveRecord::Schema.define(version: 20170803181354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,23 @@ ActiveRecord::Schema.define(version: 20170802135052) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subnet_id"], name: "index_addresses_on_subnet_id"
+  end
+
+  create_table "clusters", force: :cascade do |t|
+    t.float "cpu_total"
+    t.float "cpu_used"
+    t.float "memory_total"
+    t.float "memory_used"
+    t.bigint "data_center_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["data_center_id"], name: "index_clusters_on_data_center_id"
+  end
+
+  create_table "data_centers", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -38,6 +55,17 @@ ActiveRecord::Schema.define(version: 20170802135052) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "hosts", force: :cascade do |t|
+    t.float "cpu_total"
+    t.float "cpu_used"
+    t.float "memory_total"
+    t.float "memory_used"
+    t.bigint "cluster_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cluster_id"], name: "index_hosts_on_cluster_id"
   end
 
   create_table "que_jobs", primary_key: ["queue", "priority", "run_at", "job_id"], force: :cascade, comment: "3" do |t|
@@ -73,5 +101,7 @@ ActiveRecord::Schema.define(version: 20170802135052) do
   end
 
   add_foreign_key "addresses", "subnets"
+  add_foreign_key "clusters", "data_centers"
+  add_foreign_key "hosts", "clusters"
   add_foreign_key "subnets", "sections"
 end
