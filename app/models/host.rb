@@ -1,6 +1,7 @@
 class Host < ApplicationRecord
   belongs_to :cluster
 
+  validates :name, presence: true
   validates :cpu_total, :cpu_used, :memory_total, :memory_used, numericality: {greater_than_or_equal_to: 0}
   validates :cpu_used, numericality: {less_than_or_equal_to: :cpu_total}
   validates :memory_used, numericality: {less_than_or_equal_to: :memory_total}

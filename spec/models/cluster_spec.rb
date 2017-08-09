@@ -5,6 +5,12 @@ RSpec.describe Cluster, type: :model do
     expect(build(:cluster)).to be_valid
   end
 
+  it 'is invalid with no name' do
+    host = build(:host, name: nil)
+    host.valid?
+    expect(host.errors[:name]).to include("can't be blank")
+  end
+
   it 'is invalid with negative cpu_total' do
     cluster = build(:cluster, cpu_total: -1)
     cluster.valid?

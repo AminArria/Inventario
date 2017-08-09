@@ -5,6 +5,12 @@ RSpec.describe Host, type: :model do
     expect(build(:host)).to be_valid
   end
 
+  it 'is invalid with no name' do
+    host = build(:host, name: nil)
+    host.valid?
+    expect(host.errors[:name]).to include("can't be blank")
+  end
+
   it 'is invalid with negative cpu_total' do
     host = build(:host, cpu_total: -1)
     host.valid?
