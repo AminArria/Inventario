@@ -12,4 +12,10 @@ Rails.application.routes.draw do
       resources :addresses
     end
   end
+
+  resources :data_centers, except: [:create, :destroy, :new] do
+    resources :clusters, shallow: true do
+      resources :hosts
+    end
+  end
 end
