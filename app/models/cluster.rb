@@ -17,6 +17,36 @@ class Cluster < ApplicationRecord
     memory_total - memory_used
   end
 
+  def instances_total
+    cpu = (cpu_total / ENV["vmware_instance_cpu"].to_i).to_i
+    memory = (memory_total / ENV["vmware_instance_memory"].to_i).to_i
+    return (cpu <= memory ? cpu : memory)
+  end
+
+  def instances_used
+    cpu = (cpu_used / ENV["vmware_instance_cpu"].to_i).to_i
+    memory = (memory_used / ENV["vmware_instance_memory"].to_i).to_i
+    return (cpu <= memory ? cpu : memory)
+  end
+
+  def stats
+    stats = {
+      cpu_total: cpu_total,
+      cpu_used: cpu_used,
+      memory_total: memory_total,
+      memory_used: memory_used,
+      instances_total: instances_total,
+      instances_used: instances_used
+    }
+
+    stats[:cpu_free] = stats[:cpu_total] - stats[:cpu_used]
+    stats[:memory_free] = stats[:memory_total] - stats[:memory_used]
+    stats[:instances_free] = stats[:instances_total] - stats[:instances_used]
+    stats[:used_percent] = stats[:instances_used] / stats[:instances_total].to_f * 100
+    stats[:free_percent] = stats[:instances_free] / stats[:instances_total].to_f * 100
+    stats
+  end
+
   private
 
   def nil_to_cero
