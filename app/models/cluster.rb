@@ -9,6 +9,14 @@ class Cluster < ApplicationRecord
 
   before_validation :nil_to_cero
 
+  def cpu_free
+    cpu_total - cpu_used
+  end
+
+  def memory_free
+    memory_total - memory_used
+  end
+
   private
 
   def nil_to_cero

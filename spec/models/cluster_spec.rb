@@ -46,4 +46,14 @@ RSpec.describe Cluster, type: :model do
     cluster.valid?
     expect(cluster.errors[:memory_used]).to include("must be less than or equal to 10.0")
   end
+
+  it 'returns the amount of free cpu' do
+    cluster = build(:cluster, cpu_total: 10.5, cpu_used: 7)
+    expect(cluster.cpu_free).to eq 3.5
+  end
+
+  it 'returns the amount of free memory' do
+    cluster = build(:cluster, memory_total: 100.5, memory_used: 70)
+    expect(cluster.memory_free).to eq 30.5
+  end
 end

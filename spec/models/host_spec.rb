@@ -46,4 +46,14 @@ RSpec.describe Host, type: :model do
     host.valid?
     expect(host.errors[:memory_used]).to include("must be less than or equal to 10.0")
   end
+
+  it 'returns the amount of free cpu' do
+    host = build(:host, cpu_total: 10.5, cpu_used: 7)
+    expect(host.cpu_free).to eq 3.5
+  end
+
+  it 'returns the amount of free memory' do
+    host = build(:host, memory_total: 100.5, memory_used: 70)
+    expect(host.memory_free).to eq 30.5
+  end
 end
