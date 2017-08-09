@@ -40,6 +40,16 @@ class DataCenter < ApplicationRecord
     return (cpu <= memory ? cpu : memory)
   end
 
+  def stats
+    stats = {
+      cpu_total: cpu_total,
+      cpu_used: cpu_used,
+      memory_total: memory_total,
+      memory_used: memory_used,
+      instances_total: instances_total,
+      instances_used: instances_used
+    }
+  end
 
   def self.global_instance_stats
     stats = {
