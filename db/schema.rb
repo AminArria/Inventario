@@ -70,17 +70,6 @@ ActiveRecord::Schema.define(version: 20170803191920) do
     t.index ["cluster_id"], name: "index_hosts_on_cluster_id"
   end
 
-  create_table "que_jobs", primary_key: ["queue", "priority", "run_at", "job_id"], force: :cascade, comment: "3" do |t|
-    t.integer "priority", limit: 2, default: 100, null: false
-    t.datetime "run_at", default: -> { "now()" }, null: false
-    t.bigserial "job_id", null: false
-    t.text "job_class", null: false
-    t.json "args", default: [], null: false
-    t.integer "error_count", default: 0, null: false
-    t.text "last_error"
-    t.text "queue", default: "", null: false
-  end
-
   create_table "sections", force: :cascade do |t|
     t.integer "api_id"
     t.string "name"
