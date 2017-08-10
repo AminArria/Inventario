@@ -2,7 +2,9 @@ source 'https://rubygems.org'
 ruby '2.4.0'
 
 gem 'delayed_job_active_record'
+gem "daemons"
 gem 'rbvmomi'
+gem 'whenever', require: false
 
 # Configuration
 gem 'figaro'
@@ -63,10 +65,9 @@ end
 
 group :development do
   gem "capistrano", "~> 3.8"
-  gem 'capistrano-bundler', '~> 1.2'
-  gem 'capistrano-rvm'
   gem 'capistrano-rails', '~> 1.3'
-  gem 'whenever', :require => false
+  gem 'capistrano3-delayed-job', '~> 1.0'
+  gem 'rvm1-capistrano3', require: false
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'

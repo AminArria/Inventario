@@ -37,3 +37,5 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/syst
 # set :keep_releases, 5
 
 set :migration_role, :app
+
+set :rvm1_ruby_version, '2.4.0@inventario'
