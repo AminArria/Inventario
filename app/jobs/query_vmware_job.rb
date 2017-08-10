@@ -1,13 +1,13 @@
-class QueryVmware5Job < ApplicationJob
+class QueryVmwareJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
-    vim = RbVmomi::VIM.connect(host: ENV["vmware5_url"], user: ENV["vmware_user"], password: ENV["vmware_password"])
+  def perform(vmware_url, dc_name)
+    vim = RbVmomi::VIM.connect(host: vmware_url, user: ENV["vmware_user"], password: ENV["vmware_password"], insecure: true)
 
-    vdc = vim.serviceInstance.find_datacenter('DCH_Hatillo')
-    dc = DataCenter.find_by(name: 'DCH_Hatillo')
+    vdc = vim.serviceInstance.find_datacenter(dc_name)
+    dc = DataCenter.find_by(name: dc_name)
     unless dc
-      dc = DataCenter.create!(name: 'DCH_Hatillo')
+      dc = DataCenter.create!(name: dc_name)
     end
 
     vdc.hostFolder.children.each do |vcluster|
@@ -18,7 +18,6 @@ class QueryVmware5Job < ApplicationJob
       end
 
       # cluster info
-      {:totalCPU=>183968, :totalMem=>653236, :usedCPU=>87102, :usedMem=>431940}
       cluster.memory_total = vcluster.stats[:totalMem]
       cluster.cpu_total = vcluster.stats[:totalCPU]
       cluster.memory_used = vcluster.stats[:usedMem]
