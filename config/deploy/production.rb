@@ -50,7 +50,7 @@
 # ------------------------------------
 server "10.70.98.141",
   user: "capacidades",
-  roles: %w{web app},
+  roles: %w{web app db},
   ssh_options: {
     keys: ["/home/#{ENV["USER"]}/.ssh/id_rsa"],
     forward_agent: false,
