@@ -44,4 +44,42 @@ RSpec.describe DataCenter, type: :model do
       expect(@data_center.memory_free).to eq 61
     end
   end
+
+  context "using more cpu than memory" do
+    before(:each) do
+      c = create(:cluster,
+             cpu_total: ENV["vmware_instance_cpu"].to_i*2,
+             cpu_used: ENV["vmware_instance_cpu"].to_i,
+             memory_total: ENV["vmware_instance_memory"].to_i*5,
+             memory_used: 0)
+      @data_center = c.data_center
+    end
+
+    it "returns total instances" do
+      expect(@data_center.instances_total).to eq 2
+    end
+
+    it "returns used instances" do
+      expect(@data_center.instances_used).to eq 1
+    end
+  end
+
+  context "using more memory than cpu" do
+    before(:each) do
+      c = create(:cluster,
+             cpu_total: ENV["vmware_instance_cpu"].to_i*5,
+             cpu_used: 0,
+             memory_total: ENV["vmware_instance_memory"].to_i*2,
+             memory_used: ENV["vmware_instance_memory"].to_i)
+      @data_center = c.data_center
+    end
+
+    it "returns total instances" do
+      expect(@data_center.instances_total).to eq 2
+    end
+
+    it "returns used instances" do
+      expect(@data_center.instances_used).to eq 1
+    end
+  end
 end

@@ -56,4 +56,40 @@ RSpec.describe Cluster, type: :model do
     cluster = build(:cluster, memory_total: 100.5, memory_used: 70)
     expect(cluster.memory_free).to eq 30.5
   end
+
+  context "using more cpu than memory" do
+    let(:cluster) {
+      create(:cluster,
+             cpu_total: ENV["vmware_instance_cpu"].to_i*2,
+             cpu_used: ENV["vmware_instance_cpu"].to_i,
+             memory_total: ENV["vmware_instance_memory"].to_i*5,
+             memory_used: 0)
+    }
+
+    it "returns total instances" do
+      expect(cluster.instances_total).to eq 2
+    end
+
+    it "returns used instances" do
+      expect(cluster.instances_used).to eq 1
+    end
+  end
+
+  context "using more memory than cpu" do
+    let(:cluster) {
+      create(:cluster,
+             cpu_total: ENV["vmware_instance_cpu"].to_i*5,
+             cpu_used: 0,
+             memory_total: ENV["vmware_instance_memory"].to_i*2,
+             memory_used: ENV["vmware_instance_memory"].to_i)
+    }
+
+    it "returns total instances" do
+      expect(cluster.instances_total).to eq 2
+    end
+
+    it "returns used instances" do
+      expect(cluster.instances_used).to eq 1
+    end
+  end
 end

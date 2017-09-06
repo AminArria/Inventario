@@ -37,7 +37,7 @@ class DataCenter < ApplicationRecord
   def instances_used
     cpu = (cpu_used / ENV["vmware_instance_cpu"].to_i).to_i
     memory = (memory_used / ENV["vmware_instance_memory"].to_i).to_i
-    return (cpu <= memory ? cpu : memory)
+    return (cpu >= memory ? cpu : memory)
   end
 
   def stats

@@ -18,15 +18,15 @@ class Cluster < ApplicationRecord
   end
 
   def instances_total
-    cpu = (cpu_total / ENV["vmware_instance_cpu"].to_i).to_i
-    memory = (memory_total / ENV["vmware_instance_memory"].to_i).to_i
-    return (cpu <= memory ? cpu : memory)
+    cpu_instance = (cpu_total / ENV["vmware_instance_cpu"].to_i).to_i
+    memory_instance = (memory_total / ENV["vmware_instance_memory"].to_i).to_i
+    return (cpu_instance <= memory_instance ? cpu_instance : memory_instance)
   end
 
   def instances_used
-    cpu = (cpu_used / ENV["vmware_instance_cpu"].to_i).to_i
-    memory = (memory_used / ENV["vmware_instance_memory"].to_i).to_i
-    return (cpu <= memory ? cpu : memory)
+    cpu_instance = (cpu_used / ENV["vmware_instance_cpu"].to_i).to_i
+    memory_instance = (memory_used / ENV["vmware_instance_memory"].to_i).to_i
+    return (cpu_instance >= memory_instance ? cpu_instance : memory_instance)
   end
 
   def stats
