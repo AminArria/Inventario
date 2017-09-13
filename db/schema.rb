@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170912180655) do
+ActiveRecord::Schema.define(version: 20170913153108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,12 @@ ActiveRecord::Schema.define(version: 20170912180655) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+    t.float "disk_total"
+    t.float "disk_used"
+    t.integer "physical_cores"
+    t.integer "virtual_cores"
+    t.integer "hosts_total"
+    t.integer "hosts_active"
     t.index ["data_center_id"], name: "index_clusters_on_data_center_id"
   end
 

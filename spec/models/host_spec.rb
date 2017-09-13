@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Host, type: :model do
-  let(:vmware_instance_cpu) { ENV["vmware_instance_cpu"].to_f }
-  let(:vmware_instance_memory) { ENV["vmware_instance_memory"].to_f }
-  let(:vmware_instance_disk) { ENV["vmware_instance_disk"].to_f }
+  include_context "env"
 
   it 'has a valid factory' do
     expect(build(:host)).to be_valid
