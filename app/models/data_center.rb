@@ -102,7 +102,7 @@ class DataCenter < ApplicationRecord
   private
 
   def nil_to_cero
-    disk_total ||= 0.0
-    disk_used ||= 0.0
+    self.disk_total ||= 0.0
+    self.disk_used ||= 0.0
   end
 end

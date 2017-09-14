@@ -12,7 +12,7 @@ class QueryVmwareJob < ApplicationJob
     vdc = vim.serviceInstance.find_datacenter(dc_name)
     dc = DataCenter.find_by(name: dc_name)
     unless dc
-      dc = DataCenter.create!(name: dc_name)
+      dc = DataCenter.new(name: dc_name)
     end
 
     dc.disk_total = 0.0
@@ -22,8 +22,8 @@ class QueryVmwareJob < ApplicationJob
         dc.disk_used += ds.summary.freeSpace
       end
 
-    disk_total /= 1024.0**3
-    disk_used /= 1024.0**3
+    dc.disk_total /= 1024.0**3
+    dc.disk_used /= 1024.0**3
     dc.save!
 
     vdc.hostFolder.children.each do |vcluster|

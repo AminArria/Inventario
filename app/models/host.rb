@@ -52,13 +52,13 @@ class Host < ApplicationRecord
   private
 
   def nil_to_cero
-    cpu_total ||= 0.0
-    cpu_used ||= 0.0
-    memory_total ||= 0.0
-    memory_used ||= 0.0
-    disk_total ||= 0.0
-    disk_used ||= 0.0
-    physical_cores ||= 0
-    virtual_cores ||= 0
+    self.cpu_total ||= 0.0
+    self.cpu_used ||= 0.0
+    self.memory_total ||= 0.0
+    self.memory_used ||= 0.0
+    self.disk_total ||= 0.0
+    self.disk_used ||= 0.0
+    self.physical_cores ||= 0
+    self.virtual_cores ||= 0
   end
 end
