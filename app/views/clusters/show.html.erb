@@ -1,0 +1,89 @@
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Cluster <%= @cluster.name %></h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <p>
+            <strong>Nombre:</strong>
+            <%= @cluster.name %>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p>
+            <strong>CPU total: </strong>
+            <%= two_decimal_amount @cluster.cpu_total %> GHz
+          </p>
+          <p>
+            <strong>CPU en uso: </strong>
+            <%= two_decimal_amount @cluster.cpu_used %> GHz
+          </p>
+          <p>
+            <strong>CPU disponible: </strong>
+            <%= two_decimal_amount @cluster.cpu_free %> GHz
+          </p>
+          <hr>
+          <p>
+            <strong>Memoria total: </strong>
+            <%= two_decimal_amount @cluster.memory_total %> GB
+          </p>
+          <p>
+            <strong>Memoria en uso: </strong>
+            <%= two_decimal_amount @cluster.memory_used %> GB
+          </p>
+          <p>
+            <strong>Memoria disponible: </strong>
+            <%= two_decimal_amount @cluster.memory_free %> GB
+          </p>
+          <hr>
+          <p>
+            <strong>Espacio en disco total: </strong>
+            <%= two_decimal_amount @cluster.disk_total %> GB
+          </p>
+          <p>
+            <strong>Espacio en disco en uso: </strong>
+            <%= two_decimal_amount @cluster.disk_used %> GB
+          </p>
+          <p>
+            <strong>Espacio en disco disponible: </strong>
+            <%= two_decimal_amount @cluster.disk_free %> GB
+          </p>
+        </div>
+        <div class="col-sm-3">
+          <p>
+            <strong>Procesadores fisicos: </strong>
+            <%= @cluster.physical_cores %>
+          </p>
+          <p>
+            <strong>Procesadores virtuales: </strong>
+            <%= @cluster.virtual_cores %>
+          </p>
+          <p>
+            <strong>Proporción virtuales a fisicos: </strong>
+            <%= two_decimal_amount @cluster.ratio_cores %>
+          </p>
+          <hr>
+          <p>
+            <strong>Instancias totales: </strong>
+            <%= @cluster.instances_total%>
+          </p>
+          <p>
+            <strong>Instancias en uso: </strong>
+            <%= @cluster.instances_used%>
+          </p>
+          <p>
+            <strong>Instancias disponibles: </strong>
+            <%= @cluster.instances_free%>
+          </p>
+          <hr>
+        </div>
+      </div>
+      <%= link_to icon("arrow-left", "Clusters"), data_center_clusters_path(@cluster.data_center), class: "btn btn-warning" %>
+      <%= link_to "Ver Hosts", cluster_hosts_path(@cluster), class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>

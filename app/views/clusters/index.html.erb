@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Clusters</h3>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table" id="datatable">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Instancias Totales (Talla&nbsp<%= ENV["vmware_size"] %>)</th>
+              <th>Instancias en Uso</th>
+              <th>Instancias Disponibles</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @clusters.each do |cluster| %>
+              <tr>
+                <td><%= cluster.name %></td>
+                <td><%= cluster.instances_total %></td>
+                <td><%= cluster.instances_used %></td>
+                <td><%= cluster.instances_free %></td>
+                <td>
+                  <%= link_to(icon('search'), cluster_path(cluster)) %>
+                  <%= link_to(icon('list'), cluster_hosts_path(cluster)) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
