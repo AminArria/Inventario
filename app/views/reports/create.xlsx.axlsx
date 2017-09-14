@@ -48,6 +48,9 @@ wb.add_worksheet(name: "General") do |sheet|
   if @public_ip_count
     sheet.add_row ["Direcciones IP Públicas", @public_ip_count[:max], @public_ip_count[:used], @public_ip_count[:free], two_decimal_amount(@public_ip_count[:used_percent], '.'), two_decimal_amount(@public_ip_count[:free_percent], '.'), 0], style: data
   end
+  if @virtual_hosting
+    sheet.add_row ["Hospedaje Dedicado Virtualizado (Talla #{ENV["vmware_size"]}", @virtual_hosting[:instances_total], @virtual_hosting[:instances_used], @virtual_hosting[:instances_free], two_decimal_amount(@virtual_hosting[:used_percent], '.'), two_decimal_amount(@virtual_hosting[:free_percent], '.'), 0], style: data
+  end
 
   # Leyend
   sheet.add_row [nil, "Utilización"], style: legend
@@ -109,4 +112,5 @@ wb.add_worksheet(name: "General") do |sheet|
   end
 end
 
-render 'network', locals: {wb: wb, subnets: @subnets, hide_columns: true} if params[:network][:individual]
+render 'network', locals: {wb: wb, subnets: @subnets, hide_columns: true} if @network_individual
+render 'virtual_hosting', locals: {wb: wb, clusters: @clusters, hide_columns: true} if @virtual_hosting_individual

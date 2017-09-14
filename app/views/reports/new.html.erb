@@ -58,23 +58,53 @@
             <strong>No mostrar</strong>
           <% end %>
 
-          <div class="checkbox">
-            <%= label_tag do %>
-              <%= check_box_tag "network[individual]", true %>
-              Hoja con detalles individuales
-            <% end %>
+          <div class="fields-checkbox" id="network-checkbox">
+            <div class="checkbox">
+              <%= label_tag do %>
+                <%= check_box_tag "network[individual]", true %>
+                Hoja individuales
+              <% end %>
+            </div>
+            <div class="checkbox">
+              <%= label_tag do %>
+                <%= check_box_tag "network[public]", true %>
+                IPs publicas
+              <% end %>
+            </div>
+            <div class="checkbox">
+              <%= label_tag do %>
+                <%= check_box_tag "network[private]", true %>
+                IPs privadas
+              <% end %>
+            </div>
           </div>
-          <div class="checkbox">
-            <%= label_tag do %>
-              <%= check_box_tag "network[public]", true %>
-              IPs publicas
-            <% end %>
-          </div>
-          <div class="checkbox">
-            <%= label_tag do %>
-              <%= check_box_tag "network[private]", true %>
-              IPs privadas
-            <% end %>
+        </div>
+        <hr>
+
+        <h4 id="report-hostings">Hospedaje <i class="fa fa-chevron-down"></i></h4>
+        <div id="hosting-fields">
+          <%= label_tag(:hosting_active, class: 'radio-inline') do %>
+            <%= radio_button_tag("hosting[active]", true) %>
+            <strong>Mostrar</strong>
+          <% end %>
+          <%= label_tag(:hosting_active, class: 'radio-inline') do %>
+            <%= radio_button_tag("hosting[active]", false, true) %>
+            <strong>No mostrar</strong>
+          <% end %>
+
+          <div class="fields-checkbox" id="hosting-checkbox">
+            <div class="checkbox">
+              <%= label_tag do %>
+                <%= check_box_tag "hosting[virtual]", true %>
+                Virtual
+              <% end %>
+            </div>
+            <div class="checkbox">
+              <%= label_tag do %>
+                <%= check_box_tag "hosting[virtual_individual]", true %>
+                Virtual hoja individual
+              <% end %>
+            </div>
           </div>
         </div>
         <hr>

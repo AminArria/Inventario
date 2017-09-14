@@ -1,3 +1,6 @@
+h4 {
+  cursor: pointer;
+}
 
 #column-fields {
   display: none;
@@ -7,6 +10,10 @@
   display: none;
 }
 
-h4 {
-  cursor: pointer;
+#hosting-fields {
+  display: none;
+}
+
+.fields-checkbox {
+  display: none;
 }
