@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root 'static_pages#dashboard'
 
+  get 'sign_in', to: 'static_pages#sign_in', as: 'sign_in'
+  post 'authenticate', to: 'static_pages#authenticate', as: 'authenticate'
+  get 'sign_out', to: 'static_pages#sign_out', as: 'sign_out'
+
   scope :reports, as: :reports do
     get 'general', to: "reports#general", as: 'general'
     get 'new', to: "reports#new", as: 'new'
