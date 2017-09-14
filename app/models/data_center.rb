@@ -81,7 +81,7 @@ class DataCenter < ApplicationRecord
     }
   end
 
-  def global_instance_stats
+  def self.stats
     stats = {
       instances_total: 0,
       instances_used: 0
