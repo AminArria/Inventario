@@ -1,9 +1,12 @@
 class DataCentersController < ApplicationController
-  before_action :set_section, only: [:show, :edit, :update, :destroy]
+  before_action :set_data_center, only: [:show]
 
   # GET /data_centers
   def index
     @data_centers = DataCenter.all
+  end
+
+  def show
   end
 
   private

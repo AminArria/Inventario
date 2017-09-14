@@ -36,17 +36,17 @@
       <h3 class="panel-title">Hosting</h3>
     </div>
     <div class="panel-body">
-      <h4>Dedicado</h4>
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-4">
+          <h4>Dedicado Virtualizado</h4>
           <p>Cantidad de instancias: <%= @dedicated_hosting[:instances_total] %></p>
           <p>Cantidad de instancias en uso: <%= @dedicated_hosting[:instances_used] %></p>
           <p>Cantidad de instancias libres: <%= @dedicated_hosting[:instances_free] %></p>
           <p>En uso: <span class="used-percentage"><%= two_decimal_amount @dedicated_hosting[:used_percent] %>%</span></p>
           <p>Disponibilidad: <span class="free-percentage"><%= two_decimal_amount @dedicated_hosting[:free_percent] %>%</span></p>
+          <%= link_to icon("search", "Ver Hospedaje Virtualizado"), data_centers_path, class: "btn btn-success" %>
         </div>
       </div>
-      <%= link_to icon("search", "Ver Data Center"), data_centers_path, class: "btn btn-success" %>
     </div>
   </div>
 </div>

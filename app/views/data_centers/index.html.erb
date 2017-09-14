@@ -9,10 +9,6 @@
           <thead>
             <tr>
               <th>Nombre</th>
-              <th>CPU Total (MHz)</th>
-              <th>CPU en Uso </th>
-              <th>Memoria Total (MB)</th>
-              <th>Memoria en Uso</th>
               <th>Instancias Totales (Talla&nbsp<%= ENV["vmware_size"] %>)</th>
               <th>Instancias en Uso</th>
               <th>Instancias Disponibles</th>
@@ -25,10 +21,6 @@
               <% dc_stats = dc.stats %>
               <tr>
                 <td><%= dc.name %></td>
-                <td><%= dc_stats[:cpu_total] %></td>
-                <td><%= dc_stats[:cpu_used] %></td>
-                <td><%= dc_stats[:memory_total] %></td>
-                <td><%= dc_stats[:memory_used] %></td>
                 <td><%= dc_stats[:instances_total] %></td>
                 <td><%= dc_stats[:instances_used] %></td>
                 <td><%= dc_stats[:instances_total]-dc_stats[:instances_used] %></td>
