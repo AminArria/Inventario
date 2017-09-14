@@ -17,6 +17,14 @@
 //= require datatables
 //= require_tree .
 
+var table = null;
+
 $(document).on("turbolinks:load", function() {
-  $('#datatable').DataTable();
+  table = $('#datatable').DataTable();
+});
+
+$(document).on("turbolinks:before-cache", function() {
+  if($("#datatable_wrapper").length > 0) {
+    table.destroy();
+  }
 });
