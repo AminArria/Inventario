@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Hosts</h3>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table" id="datatable">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>CPU Total</th>
+              <th>CPU en Uso</th>
+              <th>Memoria Total</th>
+              <th>Memoria en Uso</th>
+              <th>Disco Total</th>
+              <th>Disco en Uso</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @hosts.each do |host| %>
+              <tr>
+                <td><%= host.name %></td>
+                <td><%= two_decimal_amount host.cpu_total %> GHz</td>
+                <td><%= two_decimal_amount host.cpu_used %> GHz</td>
+                <td><%= two_decimal_amount host.memory_total %> GB</td>
+                <td><%= two_decimal_amount host.memory_used %> GB</td>
+                <td><%= two_decimal_amount host.disk_total %> GB</td>
+                <td><%= two_decimal_amount host.disk_used %> GB</td>
+                <td>
+                  <%= link_to(icon('search'), host_path(host)) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

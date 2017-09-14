@@ -1,0 +1,75 @@
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Host <%= @host.name %></h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <p>
+            <strong>Nombre:</strong>
+            <%= @host.name %>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <p>
+            <strong>CPU total: </strong>
+            <%= two_decimal_amount @host.cpu_total %> GHz
+          </p>
+          <p>
+            <strong>CPU en uso: </strong>
+            <%= two_decimal_amount @host.cpu_used %> GHz
+          </p>
+          <p>
+            <strong>CPU disponible: </strong>
+            <%= two_decimal_amount @host.cpu_free %> GHz
+          </p>
+          <hr>
+          <p>
+            <strong>Memoria total: </strong>
+            <%= two_decimal_amount @host.memory_total %> GB
+          </p>
+          <p>
+            <strong>Memoria en uso: </strong>
+            <%= two_decimal_amount @host.memory_used %> GB
+          </p>
+          <p>
+            <strong>Memoria disponible: </strong>
+            <%= two_decimal_amount @host.memory_free %> GB
+          </p>
+          <hr>
+          <p>
+            <strong>Espacio en disco total: </strong>
+            <%= two_decimal_amount @host.disk_total %> GB
+          </p>
+          <p>
+            <strong>Espacio en disco en uso: </strong>
+            <%= two_decimal_amount @host.disk_used %> GB
+          </p>
+          <p>
+            <strong>Espacio en disco disponible: </strong>
+            <%= two_decimal_amount @host.disk_free %> GB
+          </p>
+        </div>
+        <div class="col-sm-3">
+          <p>
+            <strong>Procesadores fisicos: </strong>
+            <%= @host.physical_cores %>
+          </p>
+          <p>
+            <strong>Procesadores virtuales: </strong>
+            <%= @host.virtual_cores %>
+          </p>
+          <p>
+            <strong>Proporción virtuales a fisicos: </strong>
+            <%= two_decimal_amount @host.ratio_cores %>
+          </p>
+          <hr>
+        </div>
+      </div>
+      <%= link_to icon("arrow-left", "Hosts"), cluster_hosts_path(@host.cluster), class: "btn btn-warning" %>
+    </div>
+  </div>
+</div>

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :data_centers, except: [:create, :destroy, :new] do
     resources :clusters, shallow: true do
-      resources :hosts
+      resources :hosts, shallow: true
     end
   end
 end
