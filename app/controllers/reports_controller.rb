@@ -3,7 +3,7 @@ class ReportsController < ApplicationController
     @public_ip_count = Section.addresses_count(public: true)
     @private_ip_count = Section.addresses_count(public: false)
     @subnets = Subnet.all
-    @dedicated_hosting = DataCenter.global_instance_stats
+    @dedicated_hosting = DataCenter.stats
     @clusters = Cluster.all
     render xlsx: 'general', filename: "Informe_Capacidades_#{xls_date_format(DateTime.now)}"
   end
