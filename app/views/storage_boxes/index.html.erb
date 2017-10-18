@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Cajas de Almacenamiento</h3>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table" id="datatable">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Espacio Total</th>
+              <th>Espacio en Uso</th>
+              <th>Espacio Disponible</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @storage_boxes.each do |sb| %>
+              <tr>
+                <td><%= sb.name %></td>
+                <td><%= kb_to_human sb.space_total %></td>
+                <td><%= kb_to_human sb.space_used %></td>
+                <td><%= kb_to_human sb.space_free %></td>
+                <td>
+                  <%= link_to(icon('search'), storage_box_path(sb)) %>
+                  <%= link_to(icon('list'), storage_box_aggregates_path(sb)) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

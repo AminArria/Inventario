@@ -39,6 +39,9 @@
               <li class=<%= navbar_activate :hosting_virtual %>>
                 <%= link_to "Hospedaje Virtualizado", data_centers_path %>
               </li>
+              <li class=<%= navbar_activate :almacenamiento %>>
+                <%= link_to "Almacenamiento", storage_boxes_path %>
+              </li>
             </ul>
             <%= link_to "Cerrar Sesión", sign_out_path, class: "sign_out btn btn-danger" %>
           <% end %>

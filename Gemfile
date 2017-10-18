@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.4.0'
 
+gem 'net-telnet'
 gem 'net-ldap', '~> 0.16.0'
 gem 'delayed_job_active_record'
 gem "daemons"

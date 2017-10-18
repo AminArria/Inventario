@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Volumenes</h3>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table" id="datatable">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Espacio Total</th>
+              <th>Espacio en Uso</th>
+              <th>Espacio Disponible</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @volumes.each do |vol| %>
+              <tr>
+                <td><%= vol.name %></td>
+                <td><%= kb_to_human vol.space_total %></td>
+                <td><%= kb_to_human vol.space_used %></td>
+                <td><%= kb_to_human vol.space_free %></td>
+                <td>
+                  <%= link_to(icon('search'), volume_path(vol)) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

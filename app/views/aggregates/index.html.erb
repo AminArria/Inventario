@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Aggregates</h3>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table" id="datatable">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Espacio Total</th>
+              <th>Espacio en Uso</th>
+              <th>Espacio Disponible</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @aggregates.each do |aggr| %>
+              <tr>
+                <td><%= aggr.name %></td>
+                <td><%= kb_to_human aggr.space_total %></td>
+                <td><%= kb_to_human aggr.space_used %></td>
+                <td><%= kb_to_human aggr.space_free %></td>
+                <td>
+                  <%= link_to(icon('search'), aggregate_path(aggr)) %>
+                  <%= link_to(icon('list'), aggregate_volumes_path(aggr)) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

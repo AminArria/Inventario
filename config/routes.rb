@@ -22,4 +22,10 @@ Rails.application.routes.draw do
       resources :hosts, shallow: true
     end
   end
+
+  resources :storage_boxes, except: [:create, :destroy, :new, :edit] do
+    resources :aggregates, shallow: true do
+      resources :volumes, shallow: true
+    end
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170914133408) do
+ActiveRecord::Schema.define(version: 20171018171604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20170914133408) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subnet_id"], name: "index_addresses_on_subnet_id"
+  end
+
+  create_table "aggregates", force: :cascade do |t|
+    t.string "name"
+    t.float "space_total"
+    t.float "space_used"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "storage_box_id"
+    t.index ["storage_box_id"], name: "index_aggregates_on_storage_box_id"
   end
 
   create_table "clusters", force: :cascade do |t|
@@ -90,6 +100,12 @@ ActiveRecord::Schema.define(version: 20170914133408) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "storage_boxes", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "subnets", force: :cascade do |t|
     t.integer "api_id"
     t.string "base"
@@ -103,8 +119,20 @@ ActiveRecord::Schema.define(version: 20170914133408) do
     t.index ["section_id"], name: "index_subnets_on_section_id"
   end
 
+  create_table "volumes", force: :cascade do |t|
+    t.string "name"
+    t.float "space_total"
+    t.float "space_used"
+    t.bigint "aggregate_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aggregate_id"], name: "index_volumes_on_aggregate_id"
+  end
+
   add_foreign_key "addresses", "subnets"
+  add_foreign_key "aggregates", "storage_boxes"
   add_foreign_key "clusters", "data_centers"
   add_foreign_key "hosts", "clusters"
   add_foreign_key "subnets", "sections"
+  add_foreign_key "volumes", "aggregates"
 end

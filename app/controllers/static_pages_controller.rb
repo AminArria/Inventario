@@ -6,6 +6,7 @@ class StaticPagesController < ApplicationController
     @sections_private = Section.addresses_count(public: false)
 
     @dedicated_hosting = DataCenter.stats
+    @nas_storage = StorageBox.nas_stats
   end
 
   def sign_in
