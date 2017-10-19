@@ -10,12 +10,9 @@ $(document).on 'click', '#report-hostings', ->
   $('#hosting-fields').toggle()
   return
 
-$(document).on 'change', 'input[type=radio][name*=hosting]', ->
-  if this.value == 'true'
-    $('#hosting-checkbox').toggle()
-  else if this.value == 'false'
-    $('#hosting-checkbox').toggle()
-    $('input[type=checkbox][name*=hosting]').removeAttr('checked')
+$(document).on 'click', '#report-storages', ->
+  $('#storage-fields').toggle()
+  return
 
 $(document).on 'change', 'input[type=radio][name*=network]', ->
   if this.value == 'true'
@@ -23,3 +20,17 @@ $(document).on 'change', 'input[type=radio][name*=network]', ->
   else if this.value == 'false'
     $('#network-checkbox').toggle()
     $('input[type=checkbox][name*=network]').removeAttr('checked')
+
+$(document).on 'change', 'input[type=radio][name*=hosting]', ->
+  if this.value == 'true'
+    $('#hosting-checkbox').toggle()
+  else if this.value == 'false'
+    $('#hosting-checkbox').toggle()
+    $('input[type=checkbox][name*=hosting]').removeAttr('checked')
+
+$(document).on 'change', 'input[type=radio][name*=storage]', ->
+  if this.value == 'true'
+    $('#storage-checkbox').toggle()
+  else if this.value == 'false'
+    $('#storage-checkbox').toggle()
+    $('input[type=checkbox][name*=storage]').removeAttr('checked')

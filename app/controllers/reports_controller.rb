@@ -8,6 +8,11 @@ class ReportsController < ApplicationController
     # Hosting
     @virtual_hosting = DataCenter.stats
     @clusters = Cluster.all
+
+    # Storage
+    @nas_storage = StorageBox.nas_stats
+    @aggregates = Aggregate.all.order(:storage_box_id, :name)
+
     render xlsx: 'general', filename: "Informe_Capacidades_#{xls_date_format(DateTime.now)}"
   end
 
@@ -38,6 +43,15 @@ class ReportsController < ApplicationController
     if params[:hosting][:virtual] == "true"
       @virtual_hosting = DataCenter.stats
       @clusters = Cluster.all if @virtual_hosting_individual
+    end
+
+    # Storage
+    @nas_storage = nil
+    @aggregates = []
+    @nas_storage_individual = (params[:storage][:nas_individual] == "true")
+    if params[:storage][:nas] == "true"
+      @nas_storage = StorageBox.nas_stats
+      @aggregates = Aggregate.all.order(:storage_box_id, :name) if @nas_storage_individual
     end
 
     render xlsx: 'create', filename: "Informe_Capacidades_#{xls_date_format(DateTime.now)}"

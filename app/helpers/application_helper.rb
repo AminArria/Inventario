@@ -31,4 +31,8 @@ module ApplicationHelper
 
     "#{two_decimal_amount amount} #{unit}"
   end
+
+  def kb_to_tb(amount)
+    two_decimal_amount(amount / 1024.0**3)
+  end
 end

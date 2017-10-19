@@ -1,0 +1,99 @@
+# Get locals
+wb = locals[:wb]
+aggregates = locals[:aggregates]
+
+# Styles
+# Sadly axlsx_rails doesn't support a yield or partial for this
+# and must be copied to each xlsx.axlsx
+h1 = wb.styles.add_style(\
+  fg_color: "ffffff",
+  b: true,
+  bg_color: "004586", \
+  sz: 12, \
+  border: {style: :thin, color: "000000"}, \
+  alignment: {horizontal: :center, vertical: :center}
+  )
+data_first = wb.styles.add_style(\
+  b: true,
+  sz: 12, \
+  border: {style: :thick, color: "000000"}, \
+  alignment: {horizontal: :center, vertical: :center}
+  )
+data = wb.styles.add_style(\
+  sz: 12, \
+  border: {style: :thick, color: "000000"}, \
+  alignment: {horizontal: :center, vertical: :center}
+  )
+
+high_use_dxf = wb.styles.add_style(bg_color: "ff0000", type: :dxf)
+mid_use_dxf = wb.styles.add_style(bg_color: "ffff00", type: :dxf)
+low_use_dxf = wb.styles.add_style(bg_color: "14da14", type: :dxf)
+high_use = wb.styles.add_style(b: true, bg_color: "ff0000", border: {style: :thin, color: "000000"}, alignment: {horizontal: :center, vertical: :center})
+mid_use = wb.styles.add_style(b: true, bg_color: "ffff00", border: {style: :thin, color: "000000"}, alignment: {horizontal: :center, vertical: :center})
+low_use = wb.styles.add_style(b: true, bg_color: "14da14", border: {style: :thin, color: "000000"}, alignment: {horizontal: :center, vertical: :center})
+
+legend = wb.styles.add_style(b: true, alignment: {horizontal: :center, vertical: :center})
+#
+# End styles
+#
+
+wb.add_worksheet(name: "NAS") do |sheet|
+  # Headers
+  sheet.add_row ["Almacenamiento NAS"], style: legend
+  sheet.add_row ["Aggregate (Caja)", "Capacidad Total", "Servicios Activos", "Servicios Disponibles", "% en Uso", "% Disponibilidad", "Servicios Comprometidos"], style: h1
+
+  # Data
+  aggregates.each do |aggregate|
+    stats = aggregate.stats
+    sheet.add_row ["#{aggregate.name} (#{aggregate.storage_box.name})", kb_to_tb(stats[:space_total]), kb_to_tb(stats[:space_used]), kb_to_tb(stats[:space_free]), two_decimal_amount(stats[:used_percent], '.'), two_decimal_amount(stats[:free_percent], '.'), 0], style: data
+  end
+
+  # Formatting and styling
+  sheet.add_conditional_formatting("E3:E#{3+aggregates.count-1}", { :type => :cellIs, :operator => :lessThan, :formula => "61", :dxfId => low_use_dxf, :priority => 1 })
+  sheet.add_conditional_formatting("E3:E#{3+aggregates.count-1}", { :type => :cellIs, :operator => :lessThan, :formula => "81", :dxfId => mid_use_dxf, :priority => 1 })
+  sheet.add_conditional_formatting("E3:E#{3+aggregates.count-1}", { :type => :cellIs, :operator => :greaterThanOrEqual, :formula => "81", :dxfId => high_use_dxf, :priority => 1 })
+
+  sheet.merge_cells("A1:G1")
+
+  if aggregates.count > 0
+    sheet["A3:A#{3+aggregates.count-1}"].map {|x| x.b = true}
+  end
+
+  # Hide columns
+  if locals[:hide_columns]
+    sheet.rows[1..(aggregates.count+1)].each do |row|
+      first_merge = nil
+      last_merge = nil
+      if params[:info][:total] != "true"
+        row.cells[1].merge row.cells[0]
+        first_merge = 0
+        last_merge = 1
+      end
+      if params[:info][:used] != "true"
+        first_merge = first_merge ? first_merge : 1
+        last_merge = 2
+        row.cells[2].merge row.cells[first_merge]
+      end
+      if params[:info][:free] != "true"
+        first_merge = last_merge == 2 ? first_merge : 2
+        last_merge = 3
+        row.cells[3].merge row.cells[first_merge]
+      end
+      if params[:info][:used_percent] != "true"
+        first_merge = last_merge == 3 ? first_merge : 3
+        last_merge = 4
+        row.cells[4].merge row.cells[first_merge]
+      end
+      if params[:info][:free_percent] != "true"
+        first_merge = last_merge == 4 ? first_merge : 4
+        last_merge = 5
+        row.cells[5].merge row.cells[first_merge]
+      end
+      if params[:info][:used_percent] != "true"
+        first_merge = last_merge == 5 ? first_merge : 5
+        last_merge = 6
+        row.cells[6].merge row.cells[first_merge]
+      end
+    end
+  end
+end

@@ -6,7 +6,7 @@
     <div class="panel-body">
       <%= form_tag reports_create_path(format: :xlsx), method: :get do %>
         <h4 id="report-columns">Columnas <i class="fa fa-chevron-down"></i></h4>
-        <div id="column-fields">
+        <div id="column-fields" class="fields">
           <%= hidden_field_tag "info[active]", true %>
           <div class="checkbox">
             <%= label_tag do %>
@@ -48,7 +48,7 @@
         <hr>
 
         <h4 id="report-networks">Redes <i class="fa fa-chevron-down"></i></h4>
-        <div id="network-fields">
+        <div id="network-fields" class="fields">
           <%= label_tag(:network_active, class: 'radio-inline') do %>
             <%= radio_button_tag("network[active]", true) %>
             <strong>Mostrar</strong>
@@ -82,7 +82,7 @@
         <hr>
 
         <h4 id="report-hostings">Hospedaje <i class="fa fa-chevron-down"></i></h4>
-        <div id="hosting-fields">
+        <div id="hosting-fields" class="fields">
           <%= label_tag(:hosting_active, class: 'radio-inline') do %>
             <%= radio_button_tag("hosting[active]", true) %>
             <strong>Mostrar</strong>
@@ -103,6 +103,34 @@
               <%= label_tag do %>
                 <%= check_box_tag "hosting[virtual_individual]", true %>
                 Virtual hoja individual
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <hr>
+
+        <h4 id="report-storages">Almacenamiento <i class="fa fa-chevron-down"></i></h4>
+        <div id="storage-fields" class="fields">
+          <%= label_tag(:storage_active, class: 'radio-inline') do %>
+            <%= radio_button_tag("storage[active]", true) %>
+            <strong>Mostrar</strong>
+          <% end %>
+          <%= label_tag(:storage_active, class: 'radio-inline') do %>
+            <%= radio_button_tag("storage[active]", false, true) %>
+            <strong>No mostrar</strong>
+          <% end %>
+
+          <div class="fields-checkbox" id="storage-checkbox">
+            <div class="checkbox">
+              <%= label_tag do %>
+                <%= check_box_tag "storage[nas]", true %>
+                NAS
+              <% end %>
+            </div>
+            <div class="checkbox">
+              <%= label_tag do %>
+                <%= check_box_tag "storage[nas_individual]", true %>
+                NAS hoja individual
               <% end %>
             </div>
           </div>
