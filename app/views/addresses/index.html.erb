@@ -1,10 +1,16 @@
+<% content_for :breadcrumb do %>
+  <li><a href=<%= root_path%>>Inicio</a></li>
+  <li><a href=<%= sections_path%>>Redes</a></li>
+  <li><a href=<%= section_subnets_path(@subnet.section)%>>Subredes</a></li>
+  <li class="active">Direcciones</li>
+<% end %>
+
 <div class="container-fluid">
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">Direcciones IP de <%= link_to @subnet.cidr, subnet_path(@subnet) %></h3>
     </div>
     <div class="panel-body">
-      <%= link_to icon("arrow-left", "Subredes"), section_subnets_path(@subnet.section), class: "btn btn-warning" %>
       <div class="table-responsive">
         <table class="table" id="datatable">
           <thead>

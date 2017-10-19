@@ -48,6 +48,11 @@
         </div>
       </div>
     </header>
+    <div>
+      <ol class="breadcrumb">
+        <%= yield :breadcrumb %>
+      </ol>
+    </div>
     <%= yield %>
   </body>
 </html>
