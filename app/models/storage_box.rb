@@ -22,8 +22,13 @@ class StorageBox < ApplicationRecord
       space_free: self.sum {|sb| sb.space_free}
     }
 
-    stats[:used_percent] = stats[:space_used] / stats[:space_total] * 100
-    stats[:free_percent] = stats[:space_free] / stats[:space_total] * 100
+    if stats[:space_total] != 0
+      stats[:used_percent] = stats[:space_used] / stats[:space_total] * 100
+      stats[:free_percent] = stats[:space_free] / stats[:space_total] * 100
+    else
+      stats[:used_percent] = 100
+      stats[:free_percent] = 100
+    end
 
     stats
   end
