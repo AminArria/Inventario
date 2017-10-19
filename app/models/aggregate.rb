@@ -10,4 +10,14 @@ class Aggregate < ApplicationRecord
   def space_free
     space_total - space_used
   end
+
+  def stats
+    {
+      space_total: space_total,
+      space_used: space_used,
+      space_free: space_free,
+      used_percent: space_used / space_total * 100,
+      free_percent: space_free / space_total * 100
+    }
+  end
 end
