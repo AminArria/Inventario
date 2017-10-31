@@ -1,6 +1,6 @@
 # Get locals
 wb = locals[:wb]
-aggregates = locals[:aggregates]
+volumes = locals[:volumes].to_a
 
 # Styles
 # Sadly axlsx_rails doesn't support a yield or partial for this
@@ -40,28 +40,64 @@ legend = wb.styles.add_style(b: true, alignment: {horizontal: :center, vertical:
 wb.add_worksheet(name: "NAS") do |sheet|
   # Headers
   sheet.add_row ["Almacenamiento NAS"], style: legend
-  sheet.add_row ["Aggregate (Caja)", "Capacidad Total", "Servicios Activos", "Servicios Disponibles", "% en Uso", "% Disponibilidad", "Servicios Comprometidos"], style: h1
+  sheet.add_row ["Caja", "Aggregate", "Volumen", "Capacidad Total", "Servicios Activos", "Servicios Disponibles", "% en Uso", "% Disponibilidad", "Servicios Comprometidos"], style: h1
 
   # Data
-  aggregates.each do |aggregate|
-    stats = aggregate.stats
-    sheet.add_row ["#{aggregate.name} (#{aggregate.storage_box.name})", kb_to_tb(stats[:space_total]), kb_to_tb(stats[:space_used]), kb_to_tb(stats[:space_free]), two_decimal_amount(stats[:used_percent], '.'), two_decimal_amount(stats[:free_percent], '.'), 0], style: data
+  prev_sb = nil
+  prev_aggr = nil
+  volumes.each do |volume|
+    prev_sb = {name: volume.aggregate.storage_box.name, start: 3, current: 3} if prev_sb.nil?
+    prev_aggr = {name: volume.aggregate.name, start: 3, current: 3} if prev_aggr.nil?
+
+    stats = volume.stats
+    sheet.add_row [volume.aggregate.storage_box.name, volume.aggregate.name, volume.name, kb_to_tb(stats[:space_total]), kb_to_tb(stats[:space_used]), kb_to_tb(stats[:space_free]), two_decimal_amount(stats[:used_percent], '.'), two_decimal_amount(stats[:free_percent], '.'), 0], style: data
+
+    # Merge aggregates
+    if prev_aggr[:name] == volume.aggregate.name
+      prev_aggr[:current] = prev_aggr[:current] + 1
+    else
+      sheet["B#{prev_aggr[:start]}"].merge sheet["B#{prev_aggr[:current]-1}"]
+      prev_aggr[:name] = volume.aggregate.name
+      prev_aggr[:start] = prev_aggr[:current]
+      prev_aggr[:current] = prev_aggr[:current] + 1
+    end
+    # Merge storage boxes
+    if prev_sb[:name] == volume.aggregate.storage_box.name
+      prev_sb[:current] = prev_sb[:current] + 1
+    else
+      sheet["A#{prev_sb[:start]}"].merge sheet["A#{prev_sb[:current]-1}"]
+      prev_sb[:name] = volume.aggregate.storage_box.name
+      prev_sb[:start] = prev_sb[:current]
+      prev_sb[:current] = prev_sb[:current] + 1
+    end
   end
 
+  # Merge remaining aggregates
+  if prev_aggr[:start] != (prev_aggr[:current] -1)
+    sheet["B#{prev_aggr[:start]}"].merge sheet["B#{prev_aggr[:current]-1}"]
+  end
+  # Merge remaining storage boxes
+  if prev_sb[:start] != (prev_sb[:current] -1)
+    sheet["A#{prev_sb[:start]}"].merge sheet["A#{prev_sb[:current]-1}"]
+  end
+
+
   # Formatting and styling
-  sheet.add_conditional_formatting("E3:E#{3+aggregates.count-1}", { :type => :cellIs, :operator => :lessThan, :formula => "61", :dxfId => low_use_dxf, :priority => 1 })
-  sheet.add_conditional_formatting("E3:E#{3+aggregates.count-1}", { :type => :cellIs, :operator => :lessThan, :formula => "81", :dxfId => mid_use_dxf, :priority => 1 })
-  sheet.add_conditional_formatting("E3:E#{3+aggregates.count-1}", { :type => :cellIs, :operator => :greaterThanOrEqual, :formula => "81", :dxfId => high_use_dxf, :priority => 1 })
+  sheet.add_conditional_formatting("E3:E#{3+volumes.count-1}", { :type => :cellIs, :operator => :lessThan, :formula => "61", :dxfId => low_use_dxf, :priority => 1 })
+  sheet.add_conditional_formatting("E3:E#{3+volumes.count-1}", { :type => :cellIs, :operator => :lessThan, :formula => "81", :dxfId => mid_use_dxf, :priority => 1 })
+  sheet.add_conditional_formatting("E3:E#{3+volumes.count-1}", { :type => :cellIs, :operator => :greaterThanOrEqual, :formula => "81", :dxfId => high_use_dxf, :priority => 1 })
 
   sheet.merge_cells("A1:G1")
 
-  if aggregates.count > 0
-    sheet["A3:A#{3+aggregates.count-1}"].map {|x| x.b = true}
+  if volumes.count > 0
+    sheet["A3:A#{3+volumes.count-1}"].map {|x| x.b = true}
+    sheet["B3:B#{3+volumes.count-1}"].map {|x| x.b = true}
+    sheet["C3:C#{3+volumes.count-1}"].map {|x| x.b = true}
   end
 
   # Hide columns
   if locals[:hide_columns]
-    sheet.rows[1..(aggregates.count+1)].each do |row|
+    sheet.rows[1..(volumes.count+1)].each do |row|
       first_merge = nil
       last_merge = nil
       if params[:info][:total] != "true"

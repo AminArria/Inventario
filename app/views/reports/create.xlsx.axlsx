@@ -117,4 +117,4 @@ end
 
 render 'network', locals: {wb: wb, subnets: @subnets, hide_columns: true} if @network_individual
 render 'virtual_hosting', locals: {wb: wb, clusters: @clusters, hide_columns: true} if @virtual_hosting_individual
-render 'nas_storage', locals: {wb: wb, aggregates: @aggregates, hide_columns: true} if @nas_storage_individual
+render 'nas_storage', locals: {wb: wb, volumes: @volumes, hide_columns: true} if @nas_storage_individual

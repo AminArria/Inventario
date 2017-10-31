@@ -68,4 +68,4 @@ end
 
 render 'network', locals: {wb: wb, subnets: @subnets, hide_columns: false}
 render 'virtual_hosting', locals: {wb: wb, clusters: @clusters, hide_columns: false}
-render 'nas_storage', locals: {wb: wb, aggregates: @aggregates, hide_columns: false}
+render 'nas_storage', locals: {wb: wb, volumes: @volumes, hide_columns: false}

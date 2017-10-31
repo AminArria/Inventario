@@ -11,7 +11,10 @@ class ReportsController < ApplicationController
 
     # Storage
     @nas_storage = StorageBox.nas_stats
-    @aggregates = Aggregate.all.order(:storage_box_id, :name)
+    @volumes = Volume
+                .joins(aggregate: :storage_box)
+                .select('storage_boxes.name as sb_name, aggregates.name as aggr_name, volumes.*')
+                .order('sb_name, aggr_name, volumes.name')
 
     render xlsx: 'general', filename: "Informe_Capacidades_#{xls_date_format(DateTime.now)}"
   end
@@ -51,7 +54,10 @@ class ReportsController < ApplicationController
     @nas_storage_individual = (params[:storage][:nas_individual] == "true")
     if params[:storage][:nas] == "true"
       @nas_storage = StorageBox.nas_stats
-      @aggregates = Aggregate.all.order(:storage_box_id, :name) if @nas_storage_individual
+      @volumes = Volume
+                  .joins(aggregate: :storage_box)
+                  .select('storage_boxes.name as sb_name, aggregates.name as aggr_name, volumes.*')
+                  .order('sb_name, aggr_name, volumes.name') if @nas_storage_individual
     end
 
     render xlsx: 'create', filename: "Informe_Capacidades_#{xls_date_format(DateTime.now)}"
